@@ -136,7 +136,12 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = User::where('id', $id)->first();
+        $role = getRole();
+        return response()->json([
+            'data' => $data,
+            'role' => $role
+        ]);
     }
 
     /**
@@ -144,7 +149,66 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validasi = Validator::make($request->all(),[
+            'nama_lengkap' => 'required',
+            'username' => 'required',
+            'email' => 'required',
+            'role_id' => 'required|integer|exists:role,id',
+            'no_telfon' => 'required|integer',
+            'alamat' => 'required'
+        ],[
+            'nama_lengkap.required' => "Nama lengkap tidak boleh kosong !!",
+            'username.required' => "username tidak boleh kosong !!",
+            'email.required' => "email tidak boleh kosong !!",
+            'role_id.required' => "role tidak boleh kosong !!",
+            'role_id.integer' => "role tidak boleh kosong.",
+            'role_id.exists' => "role tidak valid.",
+            'no_telfon.required' => "telfon tidak boleh kosong !!",
+            'no_telfon.integer' => "telfon harus angka !!",
+            'alamat.required' => "alamat tidak boleh kosong !!"
+        ]);
+
+        if($validasi->fails()){
+            return response()->json(['status' => 0 ,'error'=> $validasi->errors()]);
+        }else{
+            if (!empty($request->file('foto'))) {
+    
+                if($request->input('foto_lama')){
+                    $old_picture_path = public_path('storage/user/'.$request->input('foto_lama'));
+                    if (file_exists($old_picture_path)) {
+                        unlink($old_picture_path);
+                    }   
+                }
+                $gambar = $request->file('foto');
+                $nama_gambar =  "Usr".date('dmy') . time(). '.' . $gambar->getClientOriginalExtension();
+                $path = public_path('storage/user/') . $nama_gambar;
+                Image::make($gambar)->save($path);
+                
+                $newdata = [
+                    'nama_lengkap' => $request->nama_lengkap,
+                    'username' => $request->username,
+                    'password' => Hash::make($request->password),
+                    'email' => $request->email,
+                    'role_id' => $request->role_id,
+                    'no_telfon' => $request->no_telfon,
+                    'alamat' => $request->alamat,
+                    'foto' => $nama_gambar
+                ];
+            }else{
+                $newdata = [
+                    'nama_lengkap' => $request->nama_lengkap,
+                    'username' => $request->username,
+                    'password' => Hash::make($request->password),
+                    'email' => $request->email,
+                    'role_id' => $request->role_id,
+                    'no_telfon' => $request->no_telfon,
+                    'alamat' => $request->alamat,
+                    'foto' => $request->foto_lama
+                ];
+            }
+            User::where('id', $id)->update($newdata);
+            return response()->json(["success" => "Berhasil update data user"]);
+        }
     }
 
     /**

@@ -60,9 +60,9 @@
                                 <div class="card-body">
                                   <div class="mb-2 text-muted">Foto</div>
                                   <div class="chocolat-parent">
-                                      <div data-crop-image="285">
-                                        <img alt="image" src="#" id="get_foto" class="img-fluid">
-                                      </div>
+                                      <img alt="image" src="#" id="get_foto" class="img-fluid">
+                                      {{-- <div data-crop-image="285">
+                                      </div> --}}
                                   </div>
                                 </div>
                             </div>

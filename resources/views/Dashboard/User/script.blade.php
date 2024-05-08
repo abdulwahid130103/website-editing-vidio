@@ -204,16 +204,22 @@
             $('#card-foto').addClass('d-none');
         }else if(selection == "edit"){
             $('#nama_lengkap').removeAttr('disabled');
+            $('.nama_lengkap_container').removeClass('d-none');
             $('#username').removeAttr('disabled');
+            $('.username_container').removeClass('d-none');
             $('#email').removeAttr('disabled');
+            $('.email_container').removeClass('d-none');
             $('#role_id').removeAttr('disabled');
+            $('.role_id_container').removeClass('d-none');
             $('#no_telfon').removeAttr('disabled');
+            $('.no_telfon_container').removeClass('d-none');
             $('#alamat').removeAttr('disabled');
+            $('.alamat_container').removeClass('d-none');
             $('.input-foto-container').removeClass('d-none');
-            $('.label-password').removeClass('d-none');
-            $('.password-container').removeClass('d-none');
-            $('.password-container2').removeClass('d-none');
-            $('#card-foto').addClass('d-none');
+            $('.label-password').addClass('d-none');
+            $('.password-container').addClass('d-none');
+            $('.password-container2').addClass('d-none');
+            $('#card-foto').removeClass('d-none');
         }else if(selection == "password"){
             $('#card-foto').addClass('d-none');
             $('#nama_lengkap').removeAttr('disabled');
@@ -363,81 +369,90 @@
         });
     }
 
-    // function aksi_edit_playlist(){
-    //     $('body').on('click', '.btn-playlist-edit', function(e) {
-    //         e.preventDefault();
-    //         var id = $(this).data('id');
-    //         $.ajax({
-    //             url: 'playlist/' + id + "/edit",
-    //             type: 'GET',
-    //             success: function(response) {
-    //                 showHideTombol("edit");
-    //                 $('#modalplaylist').modal('show');
-    //                 $('#nama_playlist').val(response.data.nama_playlist);
-    //                 $('#kategori_id').empty()
-    //                 $.each(response.kategori, function(key, value) {
-    //                     if (value.id == response.data.kategori_id) {
-    //                         $('#kategori_id').append('<option value="' + value.id + '" selected>' + value.nama_kategori + '</option>');
-    //                     } else {
-    //                         $('#kategori_id').append('<option value="' + value.id + '">' + value.nama_kategori + '</option>');
-    //                     }
-    //                 });
+    function aksi_edit_user(){
+        $('body').on('click', '.btn-user-edit', function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            $.ajax({
+                url: 'user/' + id + "/edit",
+                type: 'GET',
+                success: function(response) {
+                    selectionInput("edit");
+                    showHideTombol("edit");
+                    $('#modaluser').modal('show');
+                    $('#nama_lengkap').val(response.data.nama_lengkap);
+                    $('#username').val(response.data.username);
+                    $('#email').val(response.data.email);
+                    $('#no_telfon').val(response.data.no_telfon);
+                    $('#alamat').val(response.data.alamat);
+                    $('#role_id').empty()
+                    $.each(response.role, function(key, value) {
+                        if (value.id == response.data.role_id) {
+                            $('#role_id').append('<option value="' + value.id + '" selected>' + value.nama_role + '</option>');
+                        } else {
+                            $('#role_id').append('<option value="' + value.id + '">' + value.nama_role + '</option>');
+                        }
+                    });
 
-    //                 var imageSrc = response.data.thumbnail_playlist;
-    //                 if (imageSrc) {
-    //                     $('#get_thumbnail_playlist').attr("src", `{{ asset('storage/playlist/${imageSrc}' ) }} `);;
-    //                     $('#card-thumbnail-playlist').removeClass("d-none");
-    //                 } else {
-    //                     $('#card-thumbnail-playlist').addClass("d-none");
-    //                 }
-    //                 $('#thumbnail_playlist_lama').val(imageSrc);
-    //                 var idNew = response.data.id;
-    //                 $('.edit-data').off('click').on('click',function() {
-    //                     var formData = new FormData($('#playlistForm')[0]);
-    //                     formData.append('_method', 'PUT');
-    //                     formData.append('nama_playlist', $('#nama_playlist').val());
-    //                     formData.append('kategori_id', $('#kategori_id').val());
-    //                     formData.append('thumbnail_playlist_lama', $('#thumbnail_playlist_lama').val());
-    //                     formData.append('thumbnail_playlist', $('input[type=file]')[0].files[0]); 
-    //                     $.ajax({
-    //                         url: 'playlist/' + idNew,
-    //                         type: 'POST',
-    //                         dataType: 'json',
-    //                         data: formData,
-    //                         contentType: false,
-    //                         processData: false,
-    //                         success:function(response){
-    //                             if(response.status == 0){
-    //                                 var errorMessages = "<ul>";
-    //                                 console.log(response.errors);
-    //                                 $.each(response.errors, function (key, value) {
-    //                                     errorMessages += "<li>" + value + "</li>";
-    //                                 });
-    //                                 errorMessages += "</ul>";
+                    var imageSrc = response.data.foto;
+                    if (imageSrc) {
+                        $('#get_foto').attr("src", `{{ asset('storage/user/${imageSrc}' ) }} `);;
+                        $('#card-foto').removeClass("d-none");
+                    } else {
+                        $('#card-foto').addClass("d-none");
+                    }
+                    $('#foto_lama').val(imageSrc);
+                    var idNew = response.data.id;
+                    $('.edit-data').off('click').on('click',function() {
+                        var formData = new FormData($('#userForm')[0]);
+                        formData.append('_method', 'PUT');
+                        formData.append('nama_lengkap', $('#nama_lengkap').val());
+                        formData.append('username', $('#username').val());
+                        formData.append('email', $('#email').val());
+                        formData.append('role_id', $('#role_id').val());
+                        formData.append('no_telfon', $('#no_telfon').val());
+                        formData.append('alamat', $('#alamat').val());
+                        formData.append('foto_lama', $('#foto_lama').val());
+                        formData.append('foto', $('input[type=file]')[0].files[0]); 
+                        $.ajax({
+                            url: 'user/' + idNew,
+                            type: 'POST',
+                            dataType: 'json',
+                            data: formData,
+                            contentType: false,
+                            processData: false,
+                            success:function(response){
+                                if(response.status == 0){
+                                    var errorMessages = "<ul>";
+                                    console.log(response.errors);
+                                    $.each(response.errors, function (key, value) {
+                                        errorMessages += "<li>" + value + "</li>";
+                                    });
+                                    errorMessages += "</ul>";
 
-    //                                 iziToast.error({
-    //                                     message: errorMessages,
-    //                                     position: 'topRight'
-    //                                 });
-    //                             }else{
-    //                                 iziToast.success({
-    //                                     title: 'Berhasil',
-    //                                     message: response.success,
-    //                                     position: 'topRight'
-    //                                 });
-    //                             }
-    //                             $('#modalplaylist').modal('hide');
-    //                             $('#datatable_playlist').DataTable().ajax.reload();
-    //                             reset_input();
-    //                         }
-    //                     });
-    //                     $('#playlistForm').reset();
-    //                 });
-    //             }
-    //         });
+                                    iziToast.error({
+                                        message: errorMessages,
+                                        position: 'topRight'
+                                    });
+                                }else{
+                                    iziToast.success({
+                                        title: 'Berhasil',
+                                        message: response.success,
+                                        position: 'topRight'
+                                    });
+                                }
+                                $('#modaluser').modal('hide');
+                                $('#datatable_user').DataTable().ajax.reload();
+                                reset_input();
+                            }
+                        });
+                        $('#userForm').reset();
+                    });
+                }
+            });
           
-    //     });
-    // }
+        });
+    }
 
     function aksi_hapus_user(){
         $('body').on('click', '.btn-user-hapus', function(e) {
@@ -492,7 +507,7 @@
         aksi_tambah_user();
         aksi_detail_user();
         aksi_ganti_password_user();
-        // aksi_edit_playlist();
+        aksi_edit_user();
         aksi_hapus_user();
     });
 </script>
