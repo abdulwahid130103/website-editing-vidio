@@ -2,21 +2,21 @@
 
 namespace App\Models;
 
-use App\Models\User;
+use App\Models\Playlist;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Role extends Model
+class Kategori extends Model
 {
     use HasFactory;
-    public $table = "role";
+    public $table = "kategori";
     protected $primaryKey = "id";
     protected $fillable = [
-        'nama_role'
+        'nama_kategori'
     ];
 
-    public function users()
+    public function playlists()
     {
-        return $this->hasMany(User::class, 'role_id');
+        return $this->hasMany(Playlist::class, 'kategori_id');
     }
 }

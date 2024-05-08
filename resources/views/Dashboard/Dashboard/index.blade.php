@@ -1,9 +1,12 @@
-@extends('dashboard.layouts.app')
+<x-admin.app >
 
-    @section('title')
+    @slot('title')
         General Dashboard
-    @endsection
-    @section('style')
+    @endslot
+    @slot('type_menu')
+        dashboard
+    @endslot
+    @slot('style')
         <!-- CSS Libraries -->
         <link rel="stylesheet"
             href="{{ asset('library/jqvmap/dist/jqvmap.min.css') }}">
@@ -18,9 +21,9 @@
                 color: #fff !important;
             }
         </style>
-    @endsection
+    @endslot
 
-    @section('main')
+    @slot('main')
     <div class="main-content">
         <section class="section">
             <div class="section-header">
@@ -90,9 +93,9 @@
             </div>
         </section>
     </div>
-    @endsection
+    @endslot
 
-    @section('script')
+    @slot('script')
          <!-- JS Libraies -->
          <script src="{{ asset('library/simpleweather/jquery.simpleWeather.min.js') }}"></script>
          <script src="{{ asset('library/chart.js/dist/Chart.min.js') }}"></script>
@@ -104,4 +107,5 @@
          <!-- Page Specific JS File -->
          <script src="{{ asset('js/page/modules-chartjs.js') }}"></script>
          <script src="{{ asset('js/page/index-0.js') }}"></script>
-    @endsection
+    @endslot
+</x-admin.app>
