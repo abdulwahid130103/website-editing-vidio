@@ -16,8 +16,10 @@ class Vidio extends Model
         'judul',
         'deskripsi',
         'playlist_id',
-        'durasi',
-        'tanggal_upload'
+        'tanggal_upload',
+        'is_active',
+        'thumbnail_vidio',
+        'link'
     ];
     public function ratingKomens()
     {

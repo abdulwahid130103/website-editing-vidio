@@ -40,6 +40,10 @@
                         <a class="nav-link"
                             href="{{ route('user.index') }}">User</a>
                     </li>
+                    <li class='{{ Request::is('admin/vidio') ? 'active' : '' }}'>
+                        <a class="nav-link"
+                            href="{{ route('vidio.index') }}">Vidio</a>
+                    </li>
                 </ul>
             </li>
         </ul>

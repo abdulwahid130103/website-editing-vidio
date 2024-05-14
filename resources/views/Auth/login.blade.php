@@ -34,18 +34,20 @@
                     </div>
     
                     <div class="form-group">
-                        <div class="d-block">
-                            <label for="password"
-                                class="control-label">Password</label>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fa fa-key"></i>
+                                </span>
+                                <input type="password" class="form-control"
+                                    placeholder="Masukkan Password Baru ..." id="password"
+                                    name="password">
+                                <button type="button" class="btn btn-outline-primary toggle-password">
+                                    <i class="fa fa-eye"></i> Show
+                                </button>
+                            </div>
                         </div>
-                        <input id="password"
-                            type="password"
-                            class="form-control"
-                            name="password"
-                            placeholder="Masukkan password anda ..."
-                            tabindex="2"
-                            required
-                            autofocus>
                     </div>
     
     
@@ -64,7 +66,19 @@
     
     @slot('script')
         <!-- JS Libraies -->
-    
+        <script>
+              $(document).on('click', '.toggle-password', function() {
+                $(this).toggleClass('show-password');
+                var input = $(this).siblings('input');
+                if (input.attr('type') === 'password') {
+                    input.attr('type', 'text');
+                    $(this).html('<i class="fa fa-eye-slash"></i> Hide');
+                } else {
+                    input.attr('type', 'password');
+                    $(this).html('<i class="fa fa-eye"></i> Show');
+                }
+            });
+        </script>
         <!-- Page Specific JS File -->
     @endslot
     

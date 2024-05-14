@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Kategori;
+use App\Models\Playlist;
 use App\Models\Role;
 
 function getKategori() {
@@ -11,6 +12,11 @@ function getKategori() {
 
 function getRole() {
     $data = Role::all();
+    
+    return $data;
+}
+function getPlaylist() {
+    $data = Playlist::all();
     
     return $data;
 }

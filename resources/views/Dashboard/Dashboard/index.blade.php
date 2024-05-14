@@ -40,7 +40,7 @@
                                 <h4>User</h4>
                             </div>
                             <div class="card-body">
-                                11
+                                {{ $qtyUser }}
                             </div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                                 <h4>Total Vidio</h4>
                             </div>
                             <div class="card-body">
-                                12
+                                {{ $qtyVidio }}
                             </div>
                         </div>
                     </div>
@@ -67,10 +67,10 @@
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Total Like</h4>
+                                <h4>Total Playlist</h4>
                             </div>
                             <div class="card-body">
-                                13
+                                {{ $qtyPlaylist }}
                             </div>
                         </div>
                     </div>
@@ -82,10 +82,10 @@
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Total Comment</h4>
+                                <h4>Total Kategori</h4>
                             </div>
                             <div class="card-body">
-                                14
+                                {{ $qtyKategori }}
                             </div>
                         </div>
                     </div>

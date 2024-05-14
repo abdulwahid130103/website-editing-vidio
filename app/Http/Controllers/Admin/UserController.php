@@ -51,7 +51,7 @@ class UserController extends Controller
             'password' => 'required',
             'email' => 'required',
             'role_id' => 'required|integer|exists:role,id',
-            'no_telfon' => 'required|integer',
+            'no_telfon' => 'required',
             'alamat' => 'required'
         ],[
             'nama_lengkap.required' => "Nama lengkap tidak boleh kosong !!",
@@ -62,7 +62,6 @@ class UserController extends Controller
             'role_id.integer' => "role tidak boleh kosong.",
             'role_id.exists' => "role tidak valid.",
             'no_telfon.required' => "telfon tidak boleh kosong !!",
-            'no_telfon.integer' => "telfon harus angka !!",
             'alamat.required' => "alamat tidak boleh kosong !!"
         ]);
 
@@ -154,7 +153,7 @@ class UserController extends Controller
             'username' => 'required',
             'email' => 'required',
             'role_id' => 'required|integer|exists:role,id',
-            'no_telfon' => 'required|integer',
+            'no_telfon' => 'required',
             'alamat' => 'required'
         ],[
             'nama_lengkap.required' => "Nama lengkap tidak boleh kosong !!",
@@ -164,7 +163,6 @@ class UserController extends Controller
             'role_id.integer' => "role tidak boleh kosong.",
             'role_id.exists' => "role tidak valid.",
             'no_telfon.required' => "telfon tidak boleh kosong !!",
-            'no_telfon.integer' => "telfon harus angka !!",
             'alamat.required' => "alamat tidak boleh kosong !!"
         ]);
 

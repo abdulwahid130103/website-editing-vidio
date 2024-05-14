@@ -84,6 +84,7 @@
 
     <!-- Template JS File -->
 
+    @include('Dashboard.Layouts.modalProfile')
 </body>
 
 </html>

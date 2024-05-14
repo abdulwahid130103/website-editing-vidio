@@ -12,9 +12,10 @@
     </form>
     <ul class="navbar-nav navbar-right">
         {{-- @if (Auth::check() && Auth::user()->jabatan->nama_jabatan != 'kaprodi' && Auth::user()->jabatan->nama_jabatan != 'admin')   --}}
-            <li class="dropdown dropdown-list-toggle"><a href="#"
+            <li class="dropdown dropdown-list-toggle">
+                {{-- <a href="#"
                     data-toggle="dropdown"
-                    class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
+                    class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a> --}}
                 <div class="dropdown-menu dropdown-list dropdown-menu-right">
                     <div class="dropdown-header">Notifikasi
                         <div class="float-right">
@@ -34,7 +35,7 @@
                 data-toggle="dropdown"
                 class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                 <figure class="avatar mr-2 avatar-sm">
-                    <img src="{{ asset('frontend/images/Avatar2.png') }}" alt="...">
+                    <img src="{{ asset('storage/user/' . Auth::user()->foto) }}" alt="...">
                 </figure>
                 <div class="d-sm-none d-lg-inline-block">Shefi</div>
             </a>
@@ -48,7 +49,7 @@
                     <i class="fa fa-key"></i> Ganti Password
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="#"
+                <a href="{{ route('logout') }}"
                     class="dropdown-item has-icon text-danger">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </a>

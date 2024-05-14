@@ -2,14 +2,29 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Kategori;
+use App\Models\Playlist;
+use App\Models\Vidio;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        return view('Dashboard.Dashboard.index');
+        $qtyUser = User::join('role', 'users.role_id', '=', 'role.id')
+                    ->where('role.nama_role', 'pengguna')
+                    ->count();
+        $qtyVidio = Vidio::where('is_active',1)->count();
+        $qtyPlaylist = Playlist::count();
+        $qtyKategori = Kategori::count();
+        return view('Dashboard.Dashboard.index',[
+            'qtyUser' => $qtyUser,
+            'qtyVidio' => $qtyVidio,
+            'qtyPlaylist' => $qtyPlaylist,
+            'qtyKategori' => $qtyKategori,
+        ]);
     }
 
     /**

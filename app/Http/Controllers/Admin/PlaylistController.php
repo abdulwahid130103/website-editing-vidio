@@ -47,8 +47,6 @@ class PlaylistController extends Controller
             'kategori_id' => 'required|integer|exists:kategori,id'
         ],[
             'nama_playlist.required' => "Nama playlist tidak boleh kosong !!",
-            'nama_playlist.string' => "Nama playlist harus berupa teks.",
-            'nama_playlist.max' => "Nama playlist maksimal 255 karakter.",
             'kategori_id.required' => "Kategori tidak boleh kosong !!",
             'kategori_id.integer' => "Kategori tidak boleh kosong.",
             'kategori_id.exists' => "Kategori tidak valid."
