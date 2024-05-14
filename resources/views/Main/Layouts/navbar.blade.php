@@ -4,12 +4,12 @@
 
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
-        <span>Shefi</span>
+        <span>AltVidio</span>
       </a>
 
       <nav id="navbar" class="navbar">
         <ul>
-            <li class="search-container-li">
+            {{-- <li class="search-container-li">
                 <div class="search-form">
                     <form action="">
                     <div class="input-group flex-nowrap container-search">
@@ -18,19 +18,15 @@
                     </div>
                     </form>
                 </div>
-            </li>
+            </li> --}}
             <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
             <li><a class="nav-link scrollto" href="#about">About</a></li>
-            <li><a class="nav-link scrollto" href="#services">Services</a></li>
             <li class="dropdown"><a href="#"><span>Course</span> <i class="bi bi-chevron-down"></i></a>
                 <ul>
                     <li><a href="#">Editing Vidio</a></li>
-                    <li><a href="#">Copywriter</a></li>
-                    <li><a href="#">Pemateri</a></li>
                 </ul>
             </li>
-            <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-            <li><a class="getstarted scrollto" href="#about">Login</a></li>
+            <li><a class="getstarted scrollto" href="{{ route("login") }}">Login</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
