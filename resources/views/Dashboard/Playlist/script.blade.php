@@ -20,6 +20,10 @@
                     data: 'nama_playlist', 
                     name: 'nama_playlist'
                 },
+				{ 
+                    data: 'deskripsi_playlist', 
+                    name: 'deskripsi_playlist'
+                },
 				{ data: 'kategori_id', name: 'kategori_id' },
 				{
                      data: 'thumbnail_playlist', 
@@ -48,6 +52,7 @@
             $('.simpan-data').off('click').on('click',function() {
                 var formData = new FormData($('#playlistForm')[0]);
                 formData.append('nama_playlist', $('#nama_playlist').val());
+                formData.append('deskripsi_playlist', $('#deskripsi_playlist').val());
                 formData.append('kategori_id', $('#kategori_id').val());
                 formData.append('thumbnail_playlist', $('input[type=file]')[0].files[0]); 
                 $.ajax({
@@ -132,6 +137,7 @@
                     showHideTombol("edit");
                     $('#modalplaylist').modal('show');
                     $('#nama_playlist').val(response.data.nama_playlist);
+                    $('#deskripsi_playlist').val(response.data.deskripsi_playlist);
                     $('#kategori_id').empty()
                     $.each(response.kategori, function(key, value) {
                         if (value.id == response.data.kategori_id) {
@@ -154,6 +160,7 @@
                         var formData = new FormData($('#playlistForm')[0]);
                         formData.append('_method', 'PUT');
                         formData.append('nama_playlist', $('#nama_playlist').val());
+                        formData.append('deskripsi_playlist', $('#deskripsi_playlist').val());
                         formData.append('kategori_id', $('#kategori_id').val());
                         formData.append('thumbnail_playlist_lama', $('#thumbnail_playlist_lama').val());
                         formData.append('thumbnail_playlist', $('input[type=file]')[0].files[0]); 
@@ -231,11 +238,13 @@
 
     function reset_input(){
         $('#nama_playlist').val('');
+        $('#deskripsi_playlist').val('');
         $('#card-thumbnail-playlist').addClass("d-none");
     }
 
     $('#modalplaylist').on('hidden.bs.modal',function(){
         $('#nama_playlist').val('');
+        $('#deskripsi_playlist').val('');
         $('#card-thumbnail-playlist').addClass("d-none");
     });
     

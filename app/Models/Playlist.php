@@ -15,6 +15,7 @@ class Playlist extends Model
     protected $primaryKey = "id";
     protected $fillable = [
         'nama_playlist',
+        'deskripsi_playlist',
         'thumbnail_playlist',
         'kategori_id'
     ];

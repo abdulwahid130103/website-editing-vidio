@@ -44,9 +44,11 @@ class PlaylistController extends Controller
     {
         $validasi = Validator::make($request->all(),[
             'nama_playlist' => 'required',
+            'deskripsi_playlist' => 'required',
             'kategori_id' => 'required|integer|exists:kategori,id'
         ],[
             'nama_playlist.required' => "Nama playlist tidak boleh kosong !!",
+            'deskripsi_playlist.required' => "Deskripsi playlist tidak boleh kosong !!",
             'kategori_id.required' => "Kategori tidak boleh kosong !!",
             'kategori_id.integer' => "Kategori tidak boleh kosong.",
             'kategori_id.exists' => "Kategori tidak valid."
@@ -68,6 +70,7 @@ class PlaylistController extends Controller
                 Image::make($gambar)->save($path);
                 Playlist::create([
                     'nama_playlist' => $request->nama_playlist,
+                    'deskripsi_playlist' => $request->deskripsi_playlist,
                     'kategori_id' => $request->kategori_id,
                     'thumbnail_playlist' => $filename
                 ]);
@@ -108,9 +111,11 @@ class PlaylistController extends Controller
     {
         $validasi = Validator::make($request->all(),[
             'nama_playlist' => 'required',
+            'deskripsi_playlist' => 'required',
             'kategori_id' => 'required'
         ],[
             'nama_playlist.required' => "Nama playlist tidak boleh kosong !!",
+            'deskripsi_playlist.required' => "Deskripsi playlist tidak boleh kosong !!",
             'kategori_id.required' => "Kategori tidak boleh kosong !!"
         ]);
 
@@ -132,12 +137,14 @@ class PlaylistController extends Controller
                 
                 $newdata = [
                     'nama_playlist' => $request->nama_playlist,
+                    'deskripsi_playlist' => $request->deskripsi_playlist,
                     'kategori_id' => $request->kategori_id,
                     'thumbnail_playlist' => $nama_gambar
                 ];
             }else{
                 $newdata = [
                     'nama_playlist' => $request->nama_playlist,
+                    'deskripsi_playlist' => $request->deskripsi_playlist,
                     'kategori_id' => $request->kategori_id,
                     'thumbnail_playlist' => $request->thumbnail_playlist_lama
                 ];

@@ -69,6 +69,7 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>Nama Playlist</th>
+                                                <th>Deskripsi Playlist</th>
                                                 <th>Kategori</th>
                                                 <th>thumbnail</th>
                                                 <th>Aksi</th>

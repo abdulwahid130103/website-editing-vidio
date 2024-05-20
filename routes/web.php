@@ -32,8 +32,8 @@ Route::controller(LoginController::class)->group(function(){
 
 Route::middleware(['auth','cekJabatan:admin'])->prefix('admin')->group(function () {
     Route::resource('/user',UserController::class);
-    Route::get('/dashboard', [DashboardController::class,"index"])->name('dashboard.index');
     Route::resource('/role',RoleController::class);
+    Route::get('/dashboard', [DashboardController::class,"index"])->name('dashboard.index');
     Route::resource('/playlist',PlaylistController::class);
     Route::resource('/profile',ProfileController::class);
     Route::resource('/kategori',KategoriController::class);

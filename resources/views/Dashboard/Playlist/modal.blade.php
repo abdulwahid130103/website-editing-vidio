@@ -45,6 +45,12 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
+                                <label>Deskripsi Playlist</label>
+                                <textarea id="deskripsi_playlist" name="deskripsi_playlist" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
                                 <label>Thumbnail Playlist</label>
                                 <input type="file" id="thumbnail_playlist" name="thumbnail_playlist"  class="form-control">
                                 <input type="hidden" id="thumbnail_playlist_lama" name="thumbnail_playlist_lama"  class="form-control">
