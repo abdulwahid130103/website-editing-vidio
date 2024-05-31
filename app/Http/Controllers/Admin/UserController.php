@@ -7,7 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
+use Yaza\LaravelGoogleDriveStorage\Gdrive;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -24,7 +27,7 @@ class UserController extends Controller
                 ->addIndexColumn()
                 ->addColumn('role_id', function ($model){
                     return $model->role->nama_role;
-                }) 
+                })
                 ->addColumn('action', 'Dashboard.user.action')
                 ->rawColumns(['action'])
                 ->toJson();
@@ -93,7 +96,7 @@ class UserController extends Controller
             }else{
                 return response()->json(['status' => 0 ,'errorgambar'=> "Foto tidak boleh kosong !"]);
             }
-    
+
             return response()->json(["success" => "Berhasil menyimpan data user"]);
         }
     }
@@ -114,7 +117,7 @@ class UserController extends Controller
             User::where('id', $request->id)->update($newdata);
             return response()->json(["success" => "Berhasil update password user"]);
         }
-    
+
     }
 
     /**
@@ -170,18 +173,18 @@ class UserController extends Controller
             return response()->json(['status' => 0 ,'error'=> $validasi->errors()]);
         }else{
             if (!empty($request->file('foto'))) {
-    
+
                 if($request->input('foto_lama')){
                     $old_picture_path = public_path('storage/user/'.$request->input('foto_lama'));
                     if (file_exists($old_picture_path)) {
                         unlink($old_picture_path);
-                    }   
+                    }
                 }
                 $gambar = $request->file('foto');
                 $nama_gambar =  "Usr".date('dmy') . time(). '.' . $gambar->getClientOriginalExtension();
                 $path = public_path('storage/user/') . $nama_gambar;
                 Image::make($gambar)->save($path);
-                
+
                 $newdata = [
                     'nama_lengkap' => $request->nama_lengkap,
                     'username' => $request->username,
@@ -215,14 +218,14 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = User::findOrFail($id);
-        
+
         if($user->foto != null){
             $gambar_path = public_path("storage/user/{$user->foto}");
             if (file_exists($gambar_path)) {
                 unlink($gambar_path);
             }
         }
-    
+
         $user->delete();
         return response()->json(['success' => "berhasil menghapus data user"]);
     }

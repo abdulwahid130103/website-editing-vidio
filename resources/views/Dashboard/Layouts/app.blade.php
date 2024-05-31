@@ -49,7 +49,7 @@
     <div id="app">
         <div class="main-wrapper">
             <x-admin.header />
-            
+
 
             <!-- Sidebar -->
             <x-admin.sidebar>
@@ -59,13 +59,13 @@
             </x-admin.sidebar>
             <!-- Content -->
             {{ $main }}
-            
+
             <!-- Footer -->
             <x-admin.footer />
     </div>
 
-   
-    
+
+
 
     <!-- General JS Scripts -->
     <script src="{{ asset('library/jquery/dist/jquery.min.js') }}"></script>

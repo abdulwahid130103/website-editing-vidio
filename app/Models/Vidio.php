@@ -19,7 +19,8 @@ class Vidio extends Model
         'tanggal_upload',
         'is_active',
         'thumbnail_vidio',
-        'link'
+        'link',
+        'type_vidio'
     ];
     public function ratingKomens()
     {
@@ -30,5 +31,5 @@ class Vidio extends Model
     {
         return $this->belongsTo(Playlist::class, 'playlist_id');
     }
-   
+
 }

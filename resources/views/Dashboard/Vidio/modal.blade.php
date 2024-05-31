@@ -21,8 +21,48 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
+                                <label class="form-label">Type Vidio</label>
+                                <div class="selectgroup w-100">
+                                  <label class="selectgroup-item">
+                                    <input type="radio" name="upload_vidio_select" id="upload_vidio_select" value="link" class="selectgroup-input" checked="">
+                                    <span class="selectgroup-button">Link</span>
+                                  </label>
+                                  <label class="selectgroup-item">
+                                    <input type="radio" name="upload_vidio_select" id="upload_vidio_select" value="upload" class="selectgroup-input">
+                                    <span class="selectgroup-button">Upload</span>
+                                  </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 d-none" id="upload_vidio_container" class="upload_vidio_container">
+                            <div class="form-group">
+                                <label>Upload vidio</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile" accept="video/*">
+                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12" id="link_vidio_container" class="link_vidio_container">
+                            <div class="form-group">
                                 <label>Link vidio</label>
                                 <input type="text" id="link" name="link" placeholder="Masukkan link vidio ...." class="form-control" required>
+                            </div>
+                        </div>
+                        <div id="display_vidio_container" class="col-lg-12 d-none display_vidio_container mb-4">
+                            <video id="videoPlayer" data-id="upload" width="100%" controls>
+                                <source id="videoSource" src="" ype="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            {{-- <iframe width="100%" height="315" src="https://www.youtube.com/embed/0LvmB84gEqs?si=xc4dYzCinN7rZIAd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe> --}}
+                            {{-- <video controls width="100%">
+                                <source src="https://www.youtube.com/watch?v=ErdMgdJMhrw" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video> --}}
+
+                            {{-- <iframe width="100%" height="315" src="https://www.youtube.com/embed/ErdMgdJMhrw" frameborder="0" allowfullscreen></iframe> --}}
+                            <div class="d-flex justify-content-center mt-4">
+                                <button type="button" class="btn btn-primary hapus_vidio_display" id="hapus_vidio_display">Hapus Vidio</button>
                             </div>
                         </div>
                         <div class="col-lg-12">

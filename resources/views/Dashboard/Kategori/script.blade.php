@@ -11,10 +11,10 @@
 			serverSide: true,
 			ajax: "{{ route('kategori.index') }}",
 			columns: [
-                { 
-                    data: 'DT_RowIndex', 
-                    name: 'DT_RowIndex', 
-                   searchable: false 
+                {
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                   searchable: false
                 },
 				{ data: 'nama_kategori', name: 'nama_kategori' },
 				{ data: 'action', name: 'action' },
@@ -142,7 +142,7 @@
                     });
                 }
             });
-          
+
         });
     }
 
@@ -185,7 +185,7 @@
     $('#modalkategori').on('hidden.bs.modal',function(){
         $('#nama_kategori').val('');
     });
-    
+
     $(document).ready(function(){
         datatable_kategori();
         aksi_tambah_kategori();

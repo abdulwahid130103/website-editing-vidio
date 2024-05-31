@@ -88,7 +88,7 @@
     @endslot
     @slot('script')
 
-        
+
         <!-- JS Libraies -->
         <script src="{{ asset('module/dataTables.min.js') }}"></script>
         <script src="{{ asset('module/dataTables.bootstrap4.min.js') }}"></script>
@@ -105,7 +105,7 @@
         <!-- Page Specific JS File -->
         <script src="{{ asset('js/page/modules-sweetalert.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
-        
+
           <!-- JS Libraies -->
         <script src="{{ asset('library/cleave.js/dist/cleave.min.js') }}"></script>
         <script src="{{ asset('library/cleave.js/dist/addons/cleave-phone.us.js') }}"></script>
@@ -119,7 +119,7 @@
         <!-- Page Specific JS File -->
         <script src="{{ asset('js/page/forms-advanced-forms.js') }}"></script>
         @include('Dashboard.Kategori.script')
-      
+
     @endslot
 
 </x-admin.app>

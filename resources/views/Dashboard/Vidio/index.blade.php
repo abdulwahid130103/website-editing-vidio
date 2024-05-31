@@ -30,6 +30,9 @@
             href="{{ asset('library/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}">
         <link rel="stylesheet"
             href="{{ asset('library/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}">
+            <link href="
+                https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css
+                " rel="stylesheet">
 
     @endslot
 
@@ -71,6 +74,7 @@
                                                 <th>Judul</th>
                                                 <th>Deskripsi</th>
                                                 <th>Playlist</th>
+                                                <th>Type Vidio</th>
                                                 <th>Tanggal Uploads</th>
                                                 <th>Link Vidio</th>
                                                 <th>Status</th>
@@ -93,7 +97,7 @@
     @endslot
     @slot('script')
 
-        
+
         <!-- JS Libraies -->
         <script src="{{ asset('module/dataTables.min.js') }}"></script>
         <script src="{{ asset('module/dataTables.bootstrap4.min.js') }}"></script>
@@ -105,12 +109,11 @@
         <!-- Page Specific JS File -->
         <script src="{{ asset('js/page/modules-toastr.js') }}"></script>
             <!-- JS Libraies -->
-        <script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
 
         <!-- Page Specific JS File -->
         <script src="{{ asset('js/page/modules-sweetalert.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
-        
+
           <!-- JS Libraies -->
         <script src="{{ asset('library/cleave.js/dist/cleave.min.js') }}"></script>
         <script src="{{ asset('library/cleave.js/dist/addons/cleave-phone.us.js') }}"></script>
@@ -123,8 +126,11 @@
 
         <!-- Page Specific JS File -->
         <script src="{{ asset('js/page/forms-advanced-forms.js') }}"></script>
+        <script src="
+        https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.all.min.js
+        "></script>
         @include('Dashboard.vidio.script')
-      
+
     @endslot
 
 </x-admin.app>

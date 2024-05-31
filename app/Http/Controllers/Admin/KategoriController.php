@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use Log;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Yaza\LaravelGoogleDriveStorage\Gdrive;
 
 class KategoriController extends Controller
 {
@@ -37,12 +41,31 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
+        // $filename = 'blog-1.jpg';
+        // $filePath = public_path('assets/img/blog/'.$filename);
+        // if (File::exists($filePath)) {
+        //     $fileData = File::get($filePath);
+        //     Storage::disk('google')->put($filename, $fileData);
+        //     return response()->json([
+        //         "success" => "Data kategori berhasil ditambah !"
+        //     ]);
+        // } else {
+        //     return response()->json(['error' => 'File not found at path: ' . $filePath], 404);
+        // }
+        // $filename = 'blog-1.jpg';
+        // // Gdrive::put('blog-1.jpg', public_path('assets/img/blog/'.$filename));
+        // $data = Gdrive::get($filename);
+
+        // $base64_image = base64_encode($data->file);
+        // $url = 'data:' . $data->ext . ';base64,' . $base64_image;
+
+        // return response()->json(['success' => $url], 200);
         $validator = Validator::make($request->all(), [
             'nama_kategori' => 'required',
         ], [
             "nama_kategori.required" => "Data kategori tidak boleh kosong!",
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->all()]);
         }
@@ -51,7 +74,7 @@ class KategoriController extends Controller
             "nama_kategori" => $request->nama_kategori
         ]);
         return response()->json([
-            "success" => "Data kategori berhasil ditambah !"
+            "success" => "Data kategori berhasil ditambahkan !"
         ]);
     }
 
@@ -84,11 +107,11 @@ class KategoriController extends Controller
         ], [
             "nama_kategori.required" => "Data kategori tidak boleh kosong!",
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->all()]);
         }
-      
+
         Kategori::where('id',$id)->update([
             'nama_kategori' => $request->nama_kategori,
         ]);

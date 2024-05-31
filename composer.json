@@ -14,7 +14,10 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
-        "yajra/laravel-datatables": "^10.0"
+        "pbmedia/laravel-ffmpeg": "^8.5",
+        "php-ffmpeg/php-ffmpeg": "^1.2",
+        "yajra/laravel-datatables": "^10.0",
+        "yaza/laravel-google-drive-storage": "^3.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

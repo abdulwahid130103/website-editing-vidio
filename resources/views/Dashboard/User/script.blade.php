@@ -11,19 +11,19 @@
 			serverSide: true,
 			ajax: "{{ route('user.index') }}",
 			columns: [
-                { 
-                    data: 'DT_RowIndex', 
-                    name: 'DT_RowIndex', 
-                   searchable: false 
+                {
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                   searchable: false
                 },
-				{ 
-                    data: 'username', 
+				{
+                    data: 'username',
                     name: 'username'
                 },
 				{ data: 'email', name: 'email' },
 				{ data: 'role_id', name: 'role_id' },
 				{
-                     data: 'foto', 
+                     data: 'foto',
                      name: 'foto',
                      render: function (data, type, full, meta) {
                         var assetUrl = "{{ asset('storage/user/') }}";
@@ -69,7 +69,7 @@
             $('.edit-data').addClass('d-none');
             $('.password-data').removeClass('d-none');
         }
-        
+
     }
 
     function aksi_tambah_user() {
@@ -106,7 +106,7 @@
                 formData.append('role_id', $('#role_id').val());
                 formData.append('no_telfon', $('#no_telfon').val());
                 formData.append('alamat', $('#alamat').val());
-                formData.append('foto', $('input[type=file]')[0].files[0]); 
+                formData.append('foto', $('input[type=file]')[0].files[0]);
                 $.ajax({
                     url: '{{ route('user.store') }}',
                     type: 'POST',
@@ -115,7 +115,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     contentType: false,
-                    processData: false,  
+                    processData: false,
                     success: function(response) {
                         if (response.success) {
                             iziToast.success({
@@ -240,7 +240,7 @@
             $('.password-container2').removeClass('d-none');
         }
     }
-    function aksi_detail_user(){ 
+    function aksi_detail_user(){
         $('body').on('click', '.btn-user-detail', function(e) {
             selectionInput("detail");
             e.preventDefault();
@@ -274,10 +274,10 @@
                     }
                 }
             });
-          
+
         });
     }
-    function aksi_ganti_password_user(){ 
+    function aksi_ganti_password_user(){
         $('body').on('click', '.btn-user-ganti-password', function(e) {
             e.preventDefault();
             selectionInput("password");
@@ -317,7 +317,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     contentType: false,
-                    processData: false,  
+                    processData: false,
                     success: function(response) {
                         if (response.success) {
                             iziToast.success({
@@ -364,8 +364,8 @@
                 });
                 $('#userForm')[0].reset();
             });
-         
-          
+
+
         });
     }
 
@@ -413,7 +413,7 @@
                         formData.append('no_telfon', $('#no_telfon').val());
                         formData.append('alamat', $('#alamat').val());
                         formData.append('foto_lama', $('#foto_lama').val());
-                        formData.append('foto', $('input[type=file]')[0].files[0]); 
+                        formData.append('foto', $('input[type=file]')[0].files[0]);
                         $.ajax({
                             url: 'user/' + idNew,
                             type: 'POST',
@@ -450,7 +450,7 @@
                     });
                 }
             });
-          
+
         });
     }
 
@@ -486,7 +486,7 @@
         });
     }
 
-    
+
 
     function reset_input(){
         $('#nama_lengkap').val('');
@@ -501,7 +501,7 @@
     $('#modaluser').on('hidden.bs.modal',function(){
         reset_input();
     });
-    
+
     $(document).ready(function(){
         datatable_user();
         aksi_tambah_user();
