@@ -201,30 +201,58 @@ class VidioController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+
+    public function loadVidio($link) {
+        $data = Gdrive::get($link);
+
+        $base64_image = base64_encode($data->file);
+        $url = 'data:' . $data->ext . ';base64,' . $base64_image;
+        return $url;
+    }
     public function edit(string $id)
     {
         $data = Vidio::where('id', $id)->first();
         $playlist = getPlaylist();
+
+        $Link = $this->loadVidio($data->link);
+
         return response()->json([
             'data' => $data,
-            'playlist' => $playlist
-        ]);
+            'playlist' => $playlist,
+            'video_link' => $Link,
+        ],200);
     }
 
     /**
      * Update the specified resource in storage.
      */
+
+    public function cekVidioLinkSama($id,$value){
+        $data = Vidio::where('id', $id)->where('link',$value)->count();
+        if($data >= 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function getVidioLama($id){
+        $data = Vidio::where('id', $id)->first();
+        if($data){
+            return $data->link;
+        }else{
+            return null;
+        }
+    }
     public function update(Request $request, string $id)
     {
         $validasi = Validator::make($request->all(),[
             'judul' => 'required',
-            'link' => 'required',
             'deskripsi' => 'required',
             'is_active' => 'required',
             'playlist_id' => 'required|integer|exists:playlist,id'
         ],[
             'judul.required' => "Judul vidio tidak boleh kosong !!",
-            'link.required' => "link vidio tidak boleh kosong !!",
             'deskripsi.required' => "Deskripsi vidio tidak boleh kosong !!",
             'is_active.required' => "Status vidio tidak boleh kosong !!",
             'playlist_id.required' => "Playlist tidak boleh kosong !!",
@@ -235,6 +263,37 @@ class VidioController extends Controller
         if($validasi->fails()){
             return response()->json(['status' => 0 ,'error'=> $validasi->errors()]);
         }else{
+            $filename_vidio = null;
+            $filename_thumbnail = null;
+            if($request->type_vidio == "upload"){
+                if(!empty($request->file('upload'))){
+                    $cekNameVidio = $this->getVidioLama($id);
+                    if($cekNameVidio != null){
+                        Gdrive::delete($cekNameVidio);
+                        $name =  "VDO".date('dmy') . time();
+                        $gambar = $request->file('upload');
+                        $filename_vidio = $name. '.' . $gambar->getClientOriginalExtension();
+                        Storage::disk('google')->put($filename_vidio, file_get_contents($gambar));
+                    }else{
+                        return response()->json(['status' => 0 ,'error_file'=> "Vidio tidak ada !"]);
+                    }
+                }
+            }else{
+                if(is_null($request->link)){
+                    return response()->json(['status' => 0 ,'error_file'=> "Link tidak boleh kosong !"]);
+                }
+                if(!is_null($request->link)){
+                    if(preg_match('/https:\/\/(www\.)?youtube\.com\/embed|youtu\.be/', $request->link)){
+                        if(!$this->cekVidioLinkSama($id,$request->link)){
+                            $filename_vidio = $request->link;
+                        }
+                    } else {
+                        return response()->json(['status' => 0 ,'error_file'=> "Link hanya bisa vidio youtube !"]);
+                    }
+                }
+            }
+
+
             if (!empty($request->file('thumbnail_vidio'))) {
 
                 if($request->input('thumbnail_vidio_lama')){
@@ -248,24 +307,50 @@ class VidioController extends Controller
                 $path = public_path('storage/vidio/') . $nama_gambar;
                 Image::make($gambar)->save($path);
 
-                $newdata = [
-                    'judul' => $request->judul,
-                    'link' => $request->link,
-                    'deskripsi' => $request->deskripsi,
-                    'is_active' => (int)$request->is_active,
-                    'playlist_id' => (int)$request->playlist_id,
-                    'thumbnail_vidio' => $nama_gambar
-                ];
+                if($filename_vidio != null){
+                    $newdata = [
+                        'judul' => $request->judul,
+                        'link' => $filename_vidio,
+                        'type_vidio' => $request->type_vidio,
+                        'deskripsi' => $request->deskripsi,
+                        'is_active' => (int)$request->is_active,
+                        'playlist_id' => (int)$request->playlist_id,
+                        'thumbnail_vidio' => $nama_gambar
+                    ];
+                }else{
+                    $newdata = [
+                        'judul' => $request->judul,
+                        'type_vidio' => $request->type_vidio,
+                        'deskripsi' => $request->deskripsi,
+                        'is_active' => (int)$request->is_active,
+                        'playlist_id' => (int)$request->playlist_id,
+                        'thumbnail_vidio' => $nama_gambar
+                    ];
+                }
             }else{
-                $newdata = [
-                    'judul' => $request->judul,
-                    'link' => $request->link,
-                    'deskripsi' => $request->deskripsi,
-                    'is_active' => (int)$request->is_active,
-                    'playlist_id' => (int)$request->playlist_id,
-                    'thumbnail_vidio' => $request->thumbnail_vidio_lama
-                ];
+                if($filename_vidio != null){
+                    $newdata = [
+                        'judul' => $request->judul,
+                        'link' => $filename_vidio,
+                        'type_vidio' => $request->type_vidio,
+                        'deskripsi' => $request->deskripsi,
+                        'is_active' => (int)$request->is_active,
+                        'playlist_id' => (int)$request->playlist_id,
+                        'thumbnail_vidio' => $request->thumbnail_vidio_lama
+                    ];
+                }else{
+                    $newdata = [
+                        'judul' => $request->judul,
+                        'type_vidio' => $request->type_vidio,
+                        'deskripsi' => $request->deskripsi,
+                        'is_active' => (int)$request->is_active,
+                        'playlist_id' => (int)$request->playlist_id,
+                        'thumbnail_vidio' => $request->thumbnail_vidio_lama
+                    ];
+                }
             }
+
+            // dd($newdata);
             Vidio::where('id', $id)->update($newdata);
             return response()->json(["success" => "Berhasil update data vidio"]);
         }

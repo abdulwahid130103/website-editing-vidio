@@ -51,10 +51,10 @@
 		});
     }
 
-    function openLoading() {
+    function openLoading(title_open,deskripsi_open) {
         Swal.fire({
-            title: 'Mohon Tunggu...! ',
-            html: 'Sedang Upload Vidio',
+            title: title_open,
+            html: deskripsi_open,
             allowEscapeKey: false,
             allowOutsideClick: false,
             didOpen: () => {
@@ -105,7 +105,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     beforeSend: function() {
-                        openLoading()
+                        openLoading('Mohon Tunggu...! ','Sedang Upload Vidio')
                     },
                     contentType: false,
                     processData: false,
@@ -185,11 +185,43 @@
             $.ajax({
                 url: 'vidio/' + id + "/edit",
                 type: 'GET',
+                beforeSend: function() {
+                    openLoading("Mohon Ditunggu ...!",'Sedang Load Vidio ...!')
+                },
                 success: function(response) {
                     showHideTombol("edit");
+                    Swal.close();
+                    if (response.data.type_vidio == 'link') {
+                        $('input[name="upload_vidio_select"][value="link"]').prop('checked', true).trigger('change');
+                        var videoURL = response.data.link;
+                        var videoId = null;
+                        $('#link').val(videoURL);
+
+                        if (videoURL.includes('youtube.com')) {
+                            videoId = videoURL.replace('https://www.youtube.com/embed/', '');
+                        } else if (videoURL.includes('youtu.be')) {
+                            videoId = videoURL.replace('https://youtu.be/', '');
+                        }
+                        if (videoId) {
+                            var embedURL = 'https://www.youtube.com/embed/' + videoId;
+                            $('#videoPlayer').replaceWith('<iframe id="videoPlayer" data-id="link" width="100%" height="315" src="' + embedURL + '" frameborder="0" allowfullscreen></iframe>');
+                        } else {
+                            $('#videoPlayer').replaceWith(`<img width="100%" height="315" id="videoPlayer" src="{{ asset('img/not_found.jpg') }}" alt="notfound">`);
+                        }
+                        $('#display_vidio_container').removeClass('d-none');
+                    } else if (response.data.type_vidio == 'upload') {
+                        $('input[name="upload_vidio_select"][value="upload"]').prop('checked', true).trigger('change');
+                        $('#display_vidio_container').removeClass('d-none');
+                        $('#videoPlayer').replaceWith(`
+                            <video id="videoPlayer" data-id="upload" width="100%" controls>
+                                <source id="videoSource" src="${response.video_link}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        `);
+                        $('.custom-file-label').text(response.data.link);
+                    }
                     $('#modalvidio').modal('show');
                     $('#judul').val(response.data.judul);
-                    $('#link').val(response.data.link);
                     $('#deskripsi').val(response.data.deskripsi);
                     $('#playlist_id').empty()
                     $.each(response.playlist, function(key, value) {
@@ -216,15 +248,25 @@
                     $('#thumbnail_vidio_lama').val(imageSrc);
                     var idNew = response.data.id;
                     $('.edit-data').off('click').on('click',function() {
+                        $('#modalvidio').modal('hide');
                         var formData = new FormData($('#playlistForm')[0]);
                         formData.append('_method', 'PUT');
                         formData.append('judul', $('#judul').val());
-                        formData.append('link', $('#link').val());
+                        if($('input[type=file]')[0].files[0] != undefined || $('input[type=file]')[0].files[0] != null || $('input[type=file]')[0].files[0] != ""){
+                            formData.append('upload', $('input[type=file]')[0].files[0]);
+                        }
+                        if(
+                            $('#link').val() != undefined ||
+                            $('#link').val() != null ||
+                            $('#link').val() != ""){
+                            formData.append('link', $('#link').val());
+                        }
+                        formData.append('type_vidio', $('input[name="upload_vidio_select"]:checked').val());
                         formData.append('deskripsi', $('#deskripsi').val());
                         formData.append('playlist_id', $('#playlist_id').val());
                         formData.append('is_active', $('#is_active').val());
                         formData.append('thumbnail_vidio_lama', $('#thumbnail_vidio_lama').val());
-                        formData.append('thumbnail_vidio', $('input[type=file]')[0].files[0]);
+                        formData.append('thumbnail_vidio', $('input[type=file]')[1].files[0]);
                         $.ajax({
                             url: 'vidio/' + idNew,
                             type: 'POST',
@@ -232,8 +274,11 @@
                             data: formData,
                             contentType: false,
                             processData: false,
+                            beforeSend: function() {
+                                openLoading('Mohon Tunggu...! ','Sedang Update Vidio')
+                            },
                             success:function(response){
-                                if(response.status == 0){
+                                if(response.error){
                                     var errorMessages = "<ul>";
                                     console.log(response.errors);
                                     $.each(response.errors, function (key, value) {
@@ -245,7 +290,13 @@
                                         message: errorMessages,
                                         position: 'topRight'
                                     });
+                                }else if(response.error_file){
+                                    iziToast.error({
+                                        message: response.error_file,
+                                        position: 'topRight'
+                                    });
                                 }else{
+                                    closeLoading();
                                     iziToast.success({
                                         title: 'Berhasil',
                                         message: response.success,
