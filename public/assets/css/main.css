@@ -6,6 +6,21 @@
     font-family: "roboto-medium";
     src: url("../font/Roboto-Medium.ttf");
 }
+@font-face {
+    font-family: "roboto-reguler";
+    src: url("../font/Roboto-Regular.ttf");
+}
+
+/* navbar start */
+.logo > span {
+    font-family: "roboto-bold" !important;
+    font-size: 24px !important;
+}
+.navbar > ul > li > a {
+    font-family: "roboto-reguler" !important;
+    font-size: 16px !important;
+}
+/* navbar end */
 
 .caption-hero-satu {
     font-family: "roboto-bold" !important;
@@ -50,6 +65,195 @@
 .blinking {
     animation: blink 0.7s infinite;
 }
+
+.hero-vidio {
+    height: 5rem !important;
+}
+
+/* category vidio list start*/
+.container-category {
+    width: 100%;
+    /* border: 1px solid black; */
+    display: flex !important;
+    justify-content: start !important;
+    align-items: center !important;
+    flex-direction: row !important;
+    gap: 1rem !important;
+}
+.img-category {
+    width: 30px;
+    height: 30px;
+}
+
+.icon-success-content {
+    width: 15px;
+    height: 15px;
+}
+
+.caption-category {
+    height: 100%;
+    width: auto;
+    /* border: 1px solid black; */
+    font-size: 14px !important;
+    font-family: "roboto-medium" !important;
+}
+
+/* category vidio list end*/
+
+/* main content vidio start */
+
+.ratings {
+    margin-right: 10px;
+}
+
+.ratings i {
+    color: #cecece;
+    font-size: 20px;
+}
+
+.rating-color {
+    color: #fbc634 !important;
+}
+
+.review-count {
+    font-weight: 400;
+    margin-bottom: 2px;
+    font-size: 15px !important;
+}
+
+.small-ratings i {
+    color: #cecece;
+}
+
+.review-stat {
+    font-weight: 300;
+    font-size: 18px;
+    margin-bottom: 2px;
+}
+.icon-siswa-content {
+    transform: translateY(-4px);
+}
+.caption-icon-siswa-content {
+    font-size: 14px;
+    font-weight: bold;
+    font-family: "roboto-medium";
+}
+/* main content vidio end */
+
+/* detail playllist start */
+
+.ratings-detail-playlist {
+    margin-right: 10px;
+}
+
+.ratings-detail-playlist i {
+    color: #cecece;
+    font-size: 14px;
+}
+
+.rating-color-detail-playlist {
+    color: #fbc634 !important;
+}
+.main-deskripsi-detail-playlist {
+    max-width: 600px !important;
+}
+.main-deskripsi-detail-playlist p {
+    line-height: 2rem;
+}
+
+.fa-play-circle {
+    font-size: 24px;
+}
+.img-playlist {
+    width: 200px;
+    height: 100px;
+    border-radius: 10px;
+    object-fit: cover;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+.title-playlist {
+    margin-left: 1rem;
+    font-family: "roboto-bold";
+    font-size: 30px;
+}
+
+.caption-playlist {
+    font-family: "roboto-reguler";
+    font-size: 14px;
+    margin: 1rem 0;
+}
+h1,
+h2,
+h3 {
+    font-family: "roboto-bold";
+}
+h4,
+h5,
+h6 {
+    font-family: "roboto-mediun";
+}
+p {
+    font-family: "roboto-reguler";
+}
+
+.penilaian-playlist,
+.peserta-playlist {
+    font-family: "roboto-medium";
+    font-size: 18px;
+}
+
+.caption-list-vidio {
+    font-family: "roboto-bold";
+    font-size: 20px;
+}
+
+.title-list-vidio {
+    font-family: "roboto-medium";
+    font-size: 18px;
+}
+.time-list-vidio {
+    font-family: "roboto-medium";
+    font-size: 18px;
+}
+.container-list-vidio {
+    margin: 0.5rem 0;
+}
+.card-detail-playlist h1 {
+    font-family: "roboto-bold";
+    font-size: 30px;
+}
+.post-title-detail-playlist {
+    font-family: "roboto-reguler";
+    font-size: 16px;
+}
+.list-count-detail-playlist > div > h5 {
+    font-family: "roboto-reguler";
+    font-size: 14px;
+    color: #000;
+}
+.icon-count-list-detail {
+    font-size: 14px;
+}
+.btn-sekarang-card-detail {
+    margin-top: 1rem;
+    width: 100%;
+    font-family: "roboto-bold";
+    font-size: 14px;
+}
+.post-image-detail {
+    object-fit: cover;
+    height: 15rem;
+}
+.post-box {
+    border: none !important;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px !important;
+}
+
+/* detail playllist end */
 
 @keyframes blink {
     0%,

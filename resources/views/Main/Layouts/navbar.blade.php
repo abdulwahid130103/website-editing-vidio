@@ -3,8 +3,8 @@
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
       <a href="index.html" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="">
-        <span>AltVidio</span>
+        <img class="logo-perusahaan" src="{{ asset("img/logo_terbaru_dua.png") }}" alt="">
+        <span>AWSVidio</span>
       </a>
 
       <nav id="navbar" class="navbar">

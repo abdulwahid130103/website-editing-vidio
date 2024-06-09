@@ -9,7 +9,9 @@ use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\PlaylistController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Pengguna\DetailPlaylistPengguna;
 use App\Http\Controllers\Pengguna\HomeController;
+use App\Http\Controllers\Pengguna\VidioPenggunaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +25,10 @@ use App\Http\Controllers\Pengguna\HomeController;
 */
 
 Route::get('/', [HomeController::class,"index"])->name('home.index');
+Route::prefix('pengguna')->name("pengguna")->group(function () {
+    Route::get('/vidio', [VidioPenggunaController::class,"index"])->name('vidio.index');
+    Route::resource('/detailPlaylist',DetailPlaylistPengguna::class);
+});
 
 Route::controller(LoginController::class)->group(function(){
     Route::get('/login','index')->name('login');
