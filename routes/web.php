@@ -30,6 +30,11 @@ Route::prefix('pengguna')->name("pengguna")->group(function () {
     Route::get('/vidio', [VidioPenggunaController::class,"index"])->name('vidio.index');
     Route::get('/detailPlaylist/{id}',[DetailPlaylistPengguna::class,'index']);
     Route::get('/detailVidio/{id}',[DetailVidioPengguna::class,"index"]);
+    Route::get('/get_detail_vidio/{id}',[DetailVidioPengguna::class,"get_detail_vidio"])->name('get_detail_vidio');
+    Route::get('/get_list_vidio/{id}',[DetailVidioPengguna::class,"get_list_vidio"])->name('get_list_vidio');
+    Route::get('/edit_input_comment/{id}',[DetailVidioPengguna::class,"edit_input_comment"])->name('edit_input_comment');
+    Route::put('/update_comment/{id}',[DetailVidioPengguna::class,"update_comment"])->name('update_comment');
+    Route::get('/get_input_comment/{id}',[DetailVidioPengguna::class,"get_input_comment"])->name('get_input_comment');
     Route::get('/get_rating_komen/{id}',[DetailVidioPengguna::class,"get_rating_komen"])->name('get_rating_komen');
     Route::post('/store_comment',[DetailVidioPengguna::class,"store_comment"])->name('store_comment');
 });

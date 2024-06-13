@@ -397,6 +397,62 @@ p {
 .star-card .fa.checked {
     color: #ffb703;
 }
+
+.rating_parent {
+    margin-top: 0.3rem;
+}
+
+.edit_comment {
+    cursor: pointer;
+    margin-left: 1rem;
+    font-size: 14px;
+    color: #4154f1;
+}
+
+.btn-batal-edit-comment {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: "roboto-medium";
+    padding: 0.2rem 1.5rem !important;
+    color: #000;
+    background-color: #fff !important;
+}
+.btn-batal-edit-comment:hover {
+    color: #000;
+}
+.btn-komentar-edit-comment {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: "roboto-medium";
+    padding: 0.2rem 1.5rem !important;
+    background-color: #4154f1 !important;
+}
+
+.card-list-detail-vidio .card-header {
+    padding: 2rem;
+    color: #fff;
+    background-color: #3341bd;
+}
+
+.list-detail-vidio-nama-playlist {
+    font-family: "roboto-bold";
+    font-size: 30px;
+}
+.list-detail-vidio-nama-kategori {
+    font-family: "roboto-medium";
+    font-size: 16px;
+}
+.list-detail-vidio-count {
+    font-family: "roboto-reguler";
+    color: #fff;
+    font-size: 14px;
+}
+.background-detail-list {
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    background-color: #e9ecef;
+}
+
 /* detail vidio end */
 
 @keyframes blink {

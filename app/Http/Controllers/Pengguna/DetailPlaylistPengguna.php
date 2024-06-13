@@ -17,66 +17,68 @@ class DetailPlaylistPengguna extends Controller
     public function index($id)
     {
         $user = Auth::user()->id;
+        // dd($user->username);
         $data = Playlist::with(["vidios", "kategori"])->where("id", $id)->get();
         $datas = [];
-        $vidio = [];
-        $rating_riview = 0;
-        $count_penilaian = 0;
-        $unlock_next = false; // variabel untuk mengatur unlock status video selanjutnya
 
-        foreach ($data as $key => $value) {
-            $count_vidio = Vidio::where("playlist_id", $value->id)->count();
-            $get_vidio = Vidio::where("playlist_id", $value->id)->orderBy('created_at', 'asc')->get(); // Mengurutkan video berdasarkan created_at
+        foreach ($data as $playlist) {
+            $vidios = $playlist->vidios()->orderBy('created_at', 'asc')->get(); // Mengurutkan video berdasarkan created_at
+            $count_vidio = $vidios->count();
+            $id_vidio_awal = 0;
 
-            if (!is_null($get_vidio)) {
-                foreach ($get_vidio as $key => $value2) {
-                    $rating = RatingKomen::where("vidio_id", $value2->id)->get();
-                    $rating_count = RatingKomen::where("vidio_id", $value2->id)->count();
-                    $user_commented = RatingKomen::where("vidio_id", $value2->id)->where("user_id", $user)->exists(); // Mengecek apakah user sudah mengomentari video ini
+            $total_bintang = 0;
+            $total_rating_count = 0;
+            $vidio_data = [];
+            $unlock_next = false; // variabel untuk mengatur unlock status video selanjutnya
 
-                    if (!is_null($rating)) {
-                        foreach ($rating as $key => $value3) {
-                            $rating_riview += $value3->bintang;
-                        }
-                    }
-
-                    if ($rating_riview == 0) {
-                        $rating_riview = 0;
-                        $count_penilaian = 0;
-                    } else {
-                        if ((!is_null($rating_riview) && !is_null($rating_count)) && ($rating_riview != 0 && $rating_count != 0)) {
-                            $rating_riview = ($rating_riview / $rating_count);
-                            $count_penilaian = $rating_count;
-                        }
-                    }
-
-                    // Tentukan apakah video ini akan di-unlock
-                    if ($key == 0 || $unlock_next) {
-                        $unlock = true;
-                        $unlock_next = $user_commented; // jika user telah mengomentari video ini, unlock video berikutnya
-                    } else {
-                        $unlock = false;
-                    }
-
-                    $vidio[] = (object)[
-                        "id" => $value2->id,
-                        "judul_vidio" => $value2->judul,
-                        "time_vidio" => $value2->time,
-                        "unlock" => $unlock, // menambahkan status unlock pada video
-                    ];
+            foreach ($vidios as $key => $vidio) {
+                if($key == 0){
+                    $id_vidio_awal= $vidio->id;
                 }
+                $ratings = RatingKomen::where("vidio_id", $vidio->id)->get();
+                $rating_count = $ratings->count();
+                $user_commented = RatingKomen::where("vidio_id", $vidio->id)->where("user_id", $user)->exists(); // Mengecek apakah user sudah mengomentari video ini
+
+                foreach ($ratings as $rating) {
+                    $total_bintang += $rating->bintang;
+                }
+
+                $total_rating_count += $rating_count;
+
+                // Tentukan apakah video ini akan di-unlock
+                if ($key == 0 || $unlock_next) {
+                    $unlock = true;
+                    $unlock_next = $user_commented; // jika user telah mengomentari video ini, unlock video berikutnya
+                } else {
+                    $unlock = false;
+                }
+
+                $vidio_data[] = (object)[
+                    "id" => $vidio->id,
+                    "judul_vidio" => $vidio->judul,
+                    "time_vidio" => $vidio->time,
+                    "unlock" => $unlock, // menambahkan status unlock pada video
+                ];
+            }
+
+            // Menghitung rata-rata rating
+            if ($total_rating_count > 0) {
+                $rating_riview = $total_bintang / $total_rating_count;
+            } else {
+                $rating_riview = 0;
             }
 
             $datas[] = (object)[
-                "id" => $value->id,
-                "nama_playlist" => $value->nama_playlist,
-                "thumbnail_playlist" => $value->thumbnail_playlist,
-                "deskripsi_playlist" => $value->deskripsi_playlist,
-                "kategori" => $value->kategori->nama_kategori,
+                "id" => $playlist->id,
+                "nama_playlist" => $playlist->nama_playlist,
+                "thumbnail_playlist" => $playlist->thumbnail_playlist,
+                "deskripsi_playlist" => $playlist->deskripsi_playlist,
+                "kategori" => $playlist->kategori->nama_kategori,
                 "total_vidio" => $count_vidio,
                 "rating" => $rating_riview,
-                "penilaian" => $count_penilaian,
-                "vidio" => $vidio,
+                "id_vidio_awal" => $id_vidio_awal,
+                "penilaian" => $total_rating_count,
+                "vidio" => $vidio_data,
             ];
         }
 
@@ -84,6 +86,7 @@ class DetailPlaylistPengguna extends Controller
             "datas" => $datas
         ]);
     }
+
 
 
     /**

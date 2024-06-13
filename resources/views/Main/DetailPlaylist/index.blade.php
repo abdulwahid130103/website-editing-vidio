@@ -151,7 +151,7 @@
                                             </div>
                                         </div>
                                         <div>
-                                            <button class="btn btn-primary btn-sekarang-card-detail">Belajar Sekarang</button>
+                                            <a href="{{ url("pengguna/detailVidio/".$item->id_vidio_awal) }}" class="btn btn-primary btn-sekarang-card-detail">Belajar Sekarang</a>
                                         </div>
                                     </div>
                                     </div>
