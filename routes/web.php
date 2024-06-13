@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\PlaylistController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Pengguna\DetailPlaylistPengguna;
+use App\Http\Controllers\Pengguna\DetailVidioPengguna;
 use App\Http\Controllers\Pengguna\HomeController;
 use App\Http\Controllers\Pengguna\VidioPenggunaController;
 
@@ -27,7 +28,10 @@ use App\Http\Controllers\Pengguna\VidioPenggunaController;
 Route::get('/', [HomeController::class,"index"])->name('home.index');
 Route::prefix('pengguna')->name("pengguna")->group(function () {
     Route::get('/vidio', [VidioPenggunaController::class,"index"])->name('vidio.index');
-    Route::resource('/detailPlaylist',DetailPlaylistPengguna::class);
+    Route::get('/detailPlaylist/{id}',[DetailPlaylistPengguna::class,'index']);
+    Route::get('/detailVidio/{id}',[DetailVidioPengguna::class,"index"]);
+    Route::get('/get_rating_komen/{id}',[DetailVidioPengguna::class,"get_rating_komen"])->name('get_rating_komen');
+    Route::post('/store_comment',[DetailVidioPengguna::class,"store_comment"])->name('store_comment');
 });
 
 Route::controller(LoginController::class)->group(function(){

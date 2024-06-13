@@ -21,18 +21,18 @@ class LoginController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
- 
+
         if (Auth::attempt($credentials)) {
             $userRole = Auth::user()->role->nama_role;
             $request->session()->regenerate();
             // dd($userRole);
             if ($userRole == 'admin') {
                 return redirect()->route('dashboard.index');
-            }else if($userRole == 'pengadu'){
+            }else if($userRole == 'pengguna'){
                 return redirect('/');
             }
         }
- 
+
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');

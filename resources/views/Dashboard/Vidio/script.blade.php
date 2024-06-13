@@ -82,6 +82,7 @@
                 var formData = new FormData($('#vidioForm')[0]);
                 formData.append('judul', $('#judul').val());
                 formData.append('link', $('#link').val());
+                formData.append('time', $('#time').val());
                 formData.append('deskripsi', $('#deskripsi').val());
                 formData.append('playlist_id', $('#playlist_id').val());
                 if($('input[type=file]')[0].files[0] != undefined || $('input[type=file]')[0].files[0] != null || $('input[type=file]')[0].files[0] != ""){
@@ -221,6 +222,7 @@
                         $('.custom-file-label').text(response.data.link);
                     }
                     $('#modalvidio').modal('show');
+                    $('#time').val(response.data.time);
                     $('#judul').val(response.data.judul);
                     $('#deskripsi').val(response.data.deskripsi);
                     $('#playlist_id').empty()
@@ -263,6 +265,7 @@
                         }
                         formData.append('type_vidio', $('input[name="upload_vidio_select"]:checked').val());
                         formData.append('deskripsi', $('#deskripsi').val());
+                        formData.append('time', $('#time').val());
                         formData.append('playlist_id', $('#playlist_id').val());
                         formData.append('is_active', $('#is_active').val());
                         formData.append('thumbnail_vidio_lama', $('#thumbnail_vidio_lama').val());
@@ -411,6 +414,7 @@
         $('#judul').val('');
         $('#link').val('');
         $('#deskripsi').val('');
+        $('#time').val('');
         $('#card-thumbnail-vidio').addClass("d-none");
         $('#customFile').val('');
         $('#videoSource').attr('src', '');
@@ -430,6 +434,7 @@
         $('#judul').val('');
         $('#link').val('');
         $('#deskripsi').val('');
+        $('#time').val('');
         $('#card-thumbnail-vidio').addClass("d-none");
         $('#customFile').val('');
         $('#videoSource').attr('src', '');

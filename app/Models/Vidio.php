@@ -16,6 +16,7 @@ class Vidio extends Model
         'judul',
         'deskripsi',
         'playlist_id',
+        'time',
         'tanggal_upload',
         'is_active',
         'thumbnail_vidio',

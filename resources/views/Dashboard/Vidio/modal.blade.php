@@ -21,6 +21,12 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
+                                <label>Time Vidio</label>
+                                <input type="text" id="time" name="time" placeholder="Masukkan durasi vidio ...." class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
                                 <label class="form-label">Type Vidio</label>
                                 <div class="selectgroup w-100">
                                   <label class="selectgroup-item">

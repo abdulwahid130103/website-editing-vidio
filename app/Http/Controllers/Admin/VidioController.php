@@ -123,12 +123,14 @@ class VidioController extends Controller
             'deskripsi' => 'required',
             'type_vidio' => 'required',
             'is_active' => 'required',
+            'time' => 'required',
             'playlist_id' => 'required|integer|exists:playlist,id'
         ],[
             'judul.required' => "Judul vidio tidak boleh kosong !!",
             'type_vidio.required' => "Type vidio vidio tidak boleh kosong !!",
             'deskripsi.required' => "Deskripsi vidio tidak boleh kosong !!",
             'is_active.required' => "Status vidio tidak boleh kosong !!",
+            'time.required' => "Durasi vidio tidak boleh kosong !!",
             'playlist_id.required' => "Playlist tidak boleh kosong !!",
             'playlist_id.integer' => "Playlist tidak boleh kosong.",
             'playlist_id.exists' => "Playlist tidak valid."
@@ -137,6 +139,7 @@ class VidioController extends Controller
         if($validasi->fails()){
             return response()->json(['status' => 0 ,'error'=> $validasi->errors()->all()]);
         }else{
+            // dd($request);
             if (!$request->hasFile('upload_vidio') && is_null($request->link)){
                 return response()->json(['status' => 0 ,'error_file'=> "Link / upload tidak boleh kosong !"]);
             }
@@ -173,7 +176,8 @@ class VidioController extends Controller
                 Vidio::create([
                     'judul' => $request->judul,
                     'link' => $filename2,
-                    'deskripsi' => $request->deskripsi,
+                    'deskripsi' => (string)$request->deskripsi,
+                    'time' => $request->time,
                     'type_vidio' => $request->type_vidio,
                     'is_active' => (int)$request->is_active,
                     'tanggal_upload' =>date('Y-m-d'),
@@ -250,11 +254,13 @@ class VidioController extends Controller
             'judul' => 'required',
             'deskripsi' => 'required',
             'is_active' => 'required',
+            'time' => 'required',
             'playlist_id' => 'required|integer|exists:playlist,id'
         ],[
             'judul.required' => "Judul vidio tidak boleh kosong !!",
             'deskripsi.required' => "Deskripsi vidio tidak boleh kosong !!",
             'is_active.required' => "Status vidio tidak boleh kosong !!",
+            'time.required' => "Durasi vidio tidak boleh kosong !!",
             'playlist_id.required' => "Playlist tidak boleh kosong !!",
             'playlist_id.integer' => "Playlist tidak boleh kosong.",
             'playlist_id.exists' => "Playlist tidak valid."
@@ -312,6 +318,7 @@ class VidioController extends Controller
                         'judul' => $request->judul,
                         'link' => $filename_vidio,
                         'type_vidio' => $request->type_vidio,
+                        'time' => $request->time,
                         'deskripsi' => $request->deskripsi,
                         'is_active' => (int)$request->is_active,
                         'playlist_id' => (int)$request->playlist_id,
@@ -321,6 +328,7 @@ class VidioController extends Controller
                     $newdata = [
                         'judul' => $request->judul,
                         'type_vidio' => $request->type_vidio,
+                        'time' => $request->time,
                         'deskripsi' => $request->deskripsi,
                         'is_active' => (int)$request->is_active,
                         'playlist_id' => (int)$request->playlist_id,
@@ -333,6 +341,7 @@ class VidioController extends Controller
                         'judul' => $request->judul,
                         'link' => $filename_vidio,
                         'type_vidio' => $request->type_vidio,
+                        'time' => $request->time,
                         'deskripsi' => $request->deskripsi,
                         'is_active' => (int)$request->is_active,
                         'playlist_id' => (int)$request->playlist_id,
@@ -342,6 +351,7 @@ class VidioController extends Controller
                     $newdata = [
                         'judul' => $request->judul,
                         'type_vidio' => $request->type_vidio,
+                        'time' => $request->time,
                         'deskripsi' => $request->deskripsi,
                         'is_active' => (int)$request->is_active,
                         'playlist_id' => (int)$request->playlist_id,

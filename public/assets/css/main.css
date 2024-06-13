@@ -143,6 +143,8 @@
 /* detail playllist start */
 
 .ratings-detail-playlist {
+    display: flex;
+    gap: 1rem;
     margin-right: 10px;
 }
 
@@ -254,6 +256,148 @@ p {
 }
 
 /* detail playllist end */
+
+/* detail vidio start */
+
+.card-list-detail-vidio {
+    border: none !important;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px !important;
+}
+.image-list-detail-vidio {
+    width: 100%;
+    height: 6rem;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+.caption-1-detail-vidio {
+    font-family: "roboto-bold";
+    font-size: 14px;
+}
+.caption-2-detail-vidio {
+    font-family: "roboto-reguler";
+    font-size: 12px;
+}
+.play-vidio-detail-vidio {
+    border-radius: 10px;
+}
+.image-comment-detail-vidio {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+.comment-form {
+    border: none !important;
+    border-radius: 0 !important;
+    font-family: "roboto-reguler";
+    border-bottom: 1px solid #ced4da !important;
+}
+.comment-form:focus {
+    outline: none !important;
+}
+.comment-form:focus {
+    box-shadow: none !important;
+}
+.btn-batal-detail-vidio {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: "roboto-medium";
+    padding: 0.2rem 2rem !important;
+    background-color: #fff !important;
+    color: #000 !important;
+}
+.btn-komentar-detail-vidio {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: "roboto-medium";
+    padding: 0.2rem 1.5rem !important;
+    background-color: #5969f3 !important;
+}
+.user-comment-list {
+    font-family: "roboto-medium";
+    font-size: 14px;
+}
+.user-comment-list > span {
+    font-family: "roboto-reguler";
+    margin-left: 0.3rem;
+    font-size: 12px;
+}
+.isi-comment-list {
+    font-family: "roboto-reguler";
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+.isi-rating-list {
+    font-family: "roboto-reguler";
+    font-size: 14px;
+}
+.star-comment-list {
+    color: #ffb703;
+}
+.star-comment-o-list {
+    color: #000;
+}
+.container-isi-comment {
+    transform: translateX(-4rem);
+}
+.card-comment-container {
+    border: none !important;
+}
+.container-deskripsi > h1 {
+    font-family: "roboto-bold" !important;
+    font-size: 20px !important;
+}
+.container-deskripsi > h4 {
+    font-family: "roboto-medium" !important;
+    font-size: 18px !important;
+}
+.container-deskripsi > p {
+    font-family: "roboto-reguler" !important;
+    font-size: 14px !important;
+    text-align: justify !important;
+}
+.card-list-detail-vidio a {
+    color: #000 !important;
+}
+/* .form-check {
+    margin-right: 1rem;
+} */
+/* .form-check-input {
+    display: none;
+}
+
+.form-check-input + .form-check-label::before {
+    content: "\f005";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    display: inline-block;
+    font-size: 1.2rem;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.form-check-input:checked + .form-check-label::before {
+    content: "\f005";
+    color: #ffb703;
+} */
+.star-card {
+    margin-top: 0.5rem;
+    margin-right: 0.1rem;
+    font-size: 16px;
+}
+.star-card .fa {
+    font-size: 18px;
+    cursor: pointer;
+    color: grey;
+}
+
+.star-card .fa.checked {
+    color: #ffb703;
+}
+/* detail vidio end */
 
 @keyframes blink {
     0%,
