@@ -80,11 +80,13 @@
 
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
+
     {{ $script }}
 
     <!-- Template JS File -->
 
     @include('Dashboard.Layouts.modalProfile')
+    @include('Dashboard.Layouts.modalPassword')
 </body>
 
 </html>

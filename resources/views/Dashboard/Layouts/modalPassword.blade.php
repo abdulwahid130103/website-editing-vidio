@@ -1,3 +1,4 @@
+
 @if (Auth::user())
 <section>
     <div class="modal fade" tabindex="-1" role="dialog" id="modalpasswordprofile">
@@ -28,7 +29,7 @@
                                     <input type="password" class="form-control"
                                         placeholder="Masukkan Password Baru ..." id="password_profile"
                                         name="password_profile">
-                                    <button type="button" class="btn btn-outline-primary toggle-password">
+                                    <button type="button" class="btn btn-outline-primary toggle-password-profile">
                                         <i class="fa fa-eye"></i> Show
                                     </button>
                                 </div>
@@ -43,7 +44,7 @@
                                 </span>
                                 <input type="password" class="form-control" placeholder="Konfirmasi password ..."
                                     id="konfirmasi_password_profile" name="konfirmasi_password_profile">
-                                <button type="button" class="btn btn-outline-primary toggle-password">
+                                <button type="button" class="btn btn-outline-primary toggle-password-profile">
                                     <i class="fa fa-eye"></i> Show
                                 </button>
                             </div>
@@ -61,16 +62,15 @@
       </div>
 </section>
 @endif
-
 <script>
-    
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
 
-    $(document).on('click', '.toggle-password', function() {
+    $(document).on('click', '.toggle-password-profile', function() {
         $(this).toggleClass('show-password');
         var input = $(this).siblings('input');
         if (input.attr('type') === 'password') {
@@ -82,93 +82,85 @@
         }
     });
 
-    function aksi_ganti_password_profile(){ 
-        $('body').on('click', '.tombol-ganti-password', function(e) {
-            e.preventDefault();
-            $('#modalpasswordprofile').modal('show');
-            // $('.password-profile-data').off('click').on('click',function() {
-            //     var newPassword = $('#password_profile').val();
-            //     var confirmPassword = $('#konfirmasi_password_profile').val();
+    $(document).on('click','.tombol-ganti-password',function(e){
+        e.preventDefault();
+        $('#modalpasswordprofile').modal('show');
+        $('.password-profile-data').off('click').on('click',function() {
+            var newPassword = $('#password_profile').val();
+            var confirmPassword = $('#konfirmasi_password_profile').val();
 
 
-            //     if (newPassword.trim() === '' || confirmPassword.trim() === '') {
-            //         iziToast.error({
-            //             message: 'Password baru harus diisi',
-            //             position: 'topRight'
-            //         });
-            //         return;
-            //     }
+            if (newPassword.trim() === '' || confirmPassword.trim() === '') {
+                iziToast.error({
+                    message: 'Password baru harus diisi',
+                    position: 'topRight'
+                });
+                return;
+            }
 
-            //     if (newPassword !== confirmPassword) {
-            //         iziToast.error({
-            //             message: 'Password tidak sama',
-            //             position: 'topRight'
-            //         });
-            //         return;
-            //     }
+            if (newPassword !== confirmPassword) {
+                iziToast.error({
+                    message: 'Password tidak sama',
+                    position: 'topRight'
+                });
+                return;
+            }
 
-            //     var formData = new FormData($('#passwordprofileForm')[0]);
-            //     formData.append('id',$('#id_user_profile_password').val(););
-            //     formData.append('password', $('#password_profile').val());
-
-            //     $.ajax({
-            //         url: "{{ route('profile.password') }}",
-            //         type: 'POST',
-            //         data: formData,
-            //         headers: {
-            //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //         },
-            //         contentType: false,
-            //         processData: false,  
-            //         success: function(response) {
-            //             if (response.success) {
-            //                 iziToast.success({
-            //                     title: 'Berhasil',
-            //                     message: response.success,
-            //                     position: 'topRight'
-            //                 });
-            //                 $('#modalpasswordprofile').modal('hide');
-            //             } else {
-            //                 if (Array.isArray(response.error)) {
-            //                     var errorMessages = "<ul>";
-            //                     $.each(response.error, function (key, value) {
-            //                         errorMessages += "<li>" + value + "</li>";
-            //                     });
-            //                     errorMessages += "</ul>";
-            //                     $('#modalpasswordprofile').modal('hide');
-            //                     iziToast.error({
-            //                         message: errorMessages,
-            //                         position: 'topRight'
-            //                     });
-            //                 }else{
-            //                     iziToast.error({
-            //                         message: response.errorgambar,
-            //                         position: 'topRight'
-            //                     });
-            //                 }
-            //             }
-            //             reset_input();
-            //         },
-            //         error: function(xhr, status, error) {
-            //             var errors = xhr.responseJSON.error;
-            //             var errorMessage = '';
-            //             $.each(errors, function(key, value) {
-            //                 errorMessage += value + '<br>';
-            //             });
-            //             $('#modalpasswordprofile').modal('hide');
-            //             iziToast.error({
-            //                 title: 'Gagagal!',
-            //                 message: errorMessages,
-            //                 position: 'topRight'
-            //             });
-            //         }
-            //     });
-            //     $('#passwordprofileForm')[0].reset();
-            // });
-         
-          
+            $.ajax({
+                url: "{{ route('profile.password') }}",
+                type: 'POST',
+                data: {
+                    "password" : $('#password_profile').val()
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    if (response.success) {
+                        iziToast.success({
+                            title: 'Berhasil',
+                            message: response.success,
+                            position: 'topRight'
+                        });
+                        $('#modalpasswordprofile').modal('hide');
+                    } else {
+                        if (Array.isArray(response.error)) {
+                            var errorMessages = "<ul>";
+                            $.each(response.error, function (key, value) {
+                                errorMessages += "<li>" + value + "</li>";
+                            });
+                            errorMessages += "</ul>";
+                            $('#modalpasswordprofile').modal('hide');
+                            iziToast.error({
+                                message: errorMessages,
+                                position: 'topRight'
+                            });
+                        }else{
+                            iziToast.error({
+                                message: response.errorgambar,
+                                position: 'topRight'
+                            });
+                        }
+                    }
+                    reset_input();
+                },
+                error: function(xhr, status, error) {
+                    var errors = xhr.responseJSON.error;
+                    var errorMessage = '';
+                    $.each(errors, function(key, value) {
+                        errorMessage += value + '<br>';
+                    });
+                    $('#modalpasswordprofile').modal('hide');
+                    iziToast.error({
+                        title: 'Gagagal!',
+                        message: errorMessages,
+                        position: 'topRight'
+                    });
+                }
+            });
+            $('#passwordprofileForm')[0].reset();
         });
-    }
+    });
 
     function reset_input(){
         $('#password_profile').val('');
@@ -177,8 +169,5 @@
 
     $('#modalpasswordprofile').on('hidden.bs.modal',function(){
         reset_input();
-    });
-    $(document).ready(function () {
-        aksi_ganti_password_profile();
     });
 </script>

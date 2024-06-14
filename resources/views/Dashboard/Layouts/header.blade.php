@@ -23,7 +23,7 @@
                         </div>
                     </div>
                     <div class="dropdown-list-content dropdown-list-icons">
-                        
+
                     </div>
                     <div class="dropdown-footer text-center">
                         {{-- <a href="#">View All <i class="fas fa-chevron-right"></i></a> --}}

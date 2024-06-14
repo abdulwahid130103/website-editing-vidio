@@ -22,6 +22,7 @@
     <link rel="stylesheet"
         href="{{ asset('library/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css" rel="stylesheet">
     @endslot
     @slot('main')
         <!-- ======= Hero Section ======= -->
@@ -104,6 +105,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+        <script src="
+        https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.all.min.js
+        "></script>
 
         {{-- <script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script> --}}
         <!-- Page Specific JS File -->
@@ -178,17 +182,42 @@
             });
         }
 
+        function openLoading(title_open,deskripsi_open) {
+            Swal.fire({
+                title: title_open,
+                html: deskripsi_open,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading()
+                }
+            });
+        }
+
+        function closeLoading() {
+            Swal.close();
+            // You can add additional logic here after the loading is complete
+            Swal.fire({
+                icon: 'success',
+                title: 'Operasi Selesai',
+                text: 'Proses pemuatan telah selesai!',
+            });
+        }
         function get_vidio_detail() {
             $("#container_detail_vidio").empty();
             let id = $("#id_vidio").val();
             $.ajax({
                 url: `{{ url('pengguna/get_detail_vidio/${id}') }}`,
                 type: 'GET',
+                beforeSend: function() {
+                    openLoading("Mohon Ditunggu ...!",'Sedang Load Vidio ...!')
+                },
                 success: function(response) {
+                    Swal.close();
                     response.data.forEach(item => {
                         $("#container_detail_vidio").append(`
                             <div class="col-lg-12">
-                                <iframe width="100%" class="play-vidio-detail-vidio" style="height: 70vh;" src="${item.link}" frameborder="0" allowfullscreen></iframe>
+                                <iframe width="100%" id="videoPlayer" class="play-vidio-detail-vidio" style="height: 70vh;" src="${item.link}" frameborder="0" allowfullscreen></iframe>
                             </div>
                             <div class="col-lg-12">
                                 <div class="card card-comment-container">
@@ -200,6 +229,28 @@
                                 </div>
                             </div>
                         `);
+                        if (item.type_vidio == 'link') {
+                            var videoURL = item.link;
+                            var videoId = null;
+                            if (videoURL.includes('youtube.com')) {
+                                videoId = videoURL.replace('https://www.youtube.com/embed/', '');
+                            } else if (videoURL.includes('youtu.be')) {
+                                videoId = videoURL.replace('https://youtu.be/', '');
+                            }
+                            if (videoId) {
+                                var embedURL = 'https://www.youtube.com/embed/' + videoId;
+                                $('#videoPlayer').replaceWith('<iframe id="videoPlayer" class="play-vidio-detail-vidio" data-id="link" width="100%" style="height: 70vh;" src="' + embedURL + '" frameborder="0" allowfullscreen></iframe>');
+                            } else {
+                                $('#videoPlayer').replaceWith(`<img width="100%" class="play-vidio-detail-vidio" style="height: 70vh;" id="videoPlayer" src="{{ asset('img/not_found.jpg') }}" alt="notfound">`);
+                            }
+                        } else if (item.type_vidio == 'upload') {
+                            $('#videoPlayer').replaceWith(`
+                                <video id="videoPlayer" class="play-vidio-detail-vidio" style="height: 70vh;" data-id="upload" width="100%" controls>
+                                    <source id="videoSource" src="${response.video_link}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            `);
+                        }
                     });
                 }
             });

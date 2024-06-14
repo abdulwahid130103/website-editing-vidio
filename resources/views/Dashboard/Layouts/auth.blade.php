@@ -7,6 +7,7 @@
         name="viewport">
     <title>{{ $title }} | Polinema</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('frontend/image/siwadul_logo.png') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- General CSS Files -->
     <link rel="stylesheet"
         href="{{ asset('library/bootstrap/dist/css/bootstrap.min.css') }}">
@@ -15,6 +16,9 @@
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous"
         referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet"
+    href="{{ asset('library/izitoast/dist/css/iziToast.min.css') }}">
 
     {{ $style }}
 
@@ -67,6 +71,9 @@
     <script src="{{ asset('library/jquery.nicescroll/dist/jquery.nicescroll.min.js') }}"></script>
     <script src="{{ asset('library/moment/min/moment.min.js') }}"></script>
     <script src="{{ asset('js/stisla.js') }}"></script>
+
+    <!-- JS Libraies -->
+    <script src="{{ asset('library/izitoast/dist/js/iziToast.min.js') }}"></script>
 
     {{ $script }}
 

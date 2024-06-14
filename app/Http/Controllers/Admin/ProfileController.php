@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
+
 class ProfileController extends Controller
 {
     /**
@@ -82,18 +84,18 @@ class ProfileController extends Controller
             return response()->json(['status' => 0 ,'error'=> $validasi->errors()]);
         }else{
             if (!empty($request->file('foto_profile'))) {
-    
+
                 if($request->input('foto_lama_profile')){
                     $old_picture_path = public_path('storage/user/'.$request->input('foto_lama_profile'));
                     if (file_exists($old_picture_path)) {
                         unlink($old_picture_path);
-                    }   
+                    }
                 }
                 $gambar = $request->file('foto_profile');
                 $nama_gambar =  "Usr".date('dmy') . time(). '.' . $gambar->getClientOriginalExtension();
                 $path = public_path('storage/user/') . $nama_gambar;
                 Image::make($gambar)->save($path);
-                
+
                 $newdata = [
                     'nama_lengkap' => $request->nama_lengkap,
                     'username' => $request->username,
@@ -122,6 +124,7 @@ class ProfileController extends Controller
     }
 
     public function ganti_password(Request $request){
+        $user = Auth::user()->id;
         $validasi = Validator::make($request->all(),[
             'password' => 'required'
         ],[
@@ -134,10 +137,10 @@ class ProfileController extends Controller
             $newdata = [
                 'password' => Hash::make($request->password)
             ];
-            User::where('id', $request->id)->update($newdata);
+            User::where('id', $user)->update($newdata);
             return response()->json(["success" => "Berhasil update password user"]);
         }
-    
+
     }
 
 

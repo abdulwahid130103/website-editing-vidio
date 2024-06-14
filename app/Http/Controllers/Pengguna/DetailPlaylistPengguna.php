@@ -75,7 +75,7 @@ class DetailPlaylistPengguna extends Controller
                 "deskripsi_playlist" => $playlist->deskripsi_playlist,
                 "kategori" => $playlist->kategori->nama_kategori,
                 "total_vidio" => $count_vidio,
-                "rating" => $rating_riview,
+                "rating" => round($rating_riview,2),
                 "id_vidio_awal" => $id_vidio_awal,
                 "penilaian" => $total_rating_count,
                 "vidio" => $vidio_data,

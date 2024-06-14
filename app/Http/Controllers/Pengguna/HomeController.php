@@ -44,7 +44,7 @@ class HomeController extends Controller
                 "thumbnail_playlist" => $playlist->thumbnail_playlist,
                 "kategori" => $playlist->kategori->nama_kategori,
                 "total_vidio" => $count_vidio,
-                "rating" => $rating_riview,
+                "rating" => round($rating_riview,2),
             ];
         }
 

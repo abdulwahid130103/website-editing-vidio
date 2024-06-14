@@ -362,27 +362,7 @@ p {
 .card-list-detail-vidio a {
     color: #000 !important;
 }
-/* .form-check {
-    margin-right: 1rem;
-} */
-/* .form-check-input {
-    display: none;
-}
 
-.form-check-input + .form-check-label::before {
-    content: "\f005";
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    display: inline-block;
-    font-size: 1.2rem;
-    color: #ccc;
-    cursor: pointer;
-}
-
-.form-check-input:checked + .form-check-label::before {
-    content: "\f005";
-    color: #ffb703;
-} */
 .star-card {
     margin-top: 0.5rem;
     margin-right: 0.1rem;
@@ -454,6 +434,35 @@ p {
 }
 
 /* detail vidio end */
+
+/* vidio main list start */
+
+.filter_playlist {
+    color: #fff !important;
+    background-color: #3341bd !important;
+    appearance: none; /* Menghilangkan dropdown arrow default */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 20 20"><polygon fill="%23fff" points="0,0 10,10 20,0"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px; /* Spasi untuk ikon kustom */
+}
+
+/* vidio main list end */
+
+/* profile start */
+.profile-title {
+    font-family: "roboto-bold";
+    font-size: 30px;
+}
+.card-profile {
+    border: none !important;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px !important;
+}
+
+/* profile end */
 
 @keyframes blink {
     0%,

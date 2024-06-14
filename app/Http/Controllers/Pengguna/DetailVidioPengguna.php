@@ -9,7 +9,9 @@ use App\Models\RatingKomen;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
+use Yaza\LaravelGoogleDriveStorage\Gdrive;
 
 class DetailVidioPengguna extends Controller
 {
@@ -115,12 +117,38 @@ class DetailVidioPengguna extends Controller
         ]);
     }
 
+    // public function loadVidio($link) {
+    //     $data = Gdrive::get($link);
+
+    //     $base64_image = base64_encode($data->file);
+    //     $url = 'data:' . $data->ext . ';base64,' . $base64_image;
+    //     return $url;
+    // }
+    public function loadVidio($link) {
+        $cacheKey = 'video_' . md5($link);
+        if (Cache::has($cacheKey)) {
+            return Cache::get($cacheKey);
+        }
+
+        $data = Gdrive::get($link);
+        $base64_image = base64_encode($data->file);
+        $url = 'data:' . $data->ext . ';base64,' . $base64_image;
+
+        // Simpan dalam cache selama 1 jam
+        Cache::put($cacheKey, $url, now()->addHour());
+
+        return $url;
+    }
+
+
 
     public function get_detail_vidio($id){
         $id_user = Auth::user()->id;
         $data = Vidio::with(["ratingKomens","playlist"])->where("id",$id)->get();
         $datas = [];
+        $url_link = '';
         foreach ($data as $key => $value) {
+            $url_link = $value->link;
             $datas[] = (object)[
                 "id" => $value->id,
                 "judul" => $value->judul,
@@ -133,8 +161,10 @@ class DetailVidioPengguna extends Controller
                 "type_vidio" => $value->type_vidio,
             ];
         }
+        $link_new = $this->loadVidio($url_link);
         return response()->json([
             "data" => $datas,
+            'video_link' => $link_new,
         ]);
     }
 

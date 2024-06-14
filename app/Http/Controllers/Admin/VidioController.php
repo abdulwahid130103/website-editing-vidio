@@ -11,9 +11,10 @@ use Illuminate\Http\Request;
 use FFMpeg\Format\Video\X264;
 use FFMpeg\Coordinate\Dimension;
 use App\Http\Controllers\Controller;
-use FFMpeg\Filters\Video\ResizeFilter;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Cache;
 use Intervention\Image\Facades\Image;
+use FFMpeg\Filters\Video\ResizeFilter;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yaza\LaravelGoogleDriveStorage\Gdrive;
@@ -206,11 +207,26 @@ class VidioController extends Controller
      * Show the form for editing the specified resource.
      */
 
-    public function loadVidio($link) {
-        $data = Gdrive::get($link);
+    // public function loadVidio($link) {
+    //     $data = Gdrive::get($link);
 
+    //     $base64_image = base64_encode($data->file);
+    //     $url = 'data:' . $data->ext . ';base64,' . $base64_image;
+    //     return $url;
+    // }
+    public function loadVidio($link) {
+        $cacheKey = 'video_' . md5($link);
+        if (Cache::has($cacheKey)) {
+            return Cache::get($cacheKey);
+        }
+
+        $data = Gdrive::get($link);
         $base64_image = base64_encode($data->file);
         $url = 'data:' . $data->ext . ';base64,' . $base64_image;
+
+        // Simpan dalam cache selama 1 jam
+        Cache::put($cacheKey, $url, now()->addHour());
+
         return $url;
     }
     public function edit(string $id)

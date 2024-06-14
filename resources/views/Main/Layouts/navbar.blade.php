@@ -22,6 +22,7 @@
             <li><a class="nav-link scrollto active" href="{{ route('home.index') }}">Home</a></li>
             <li><a class="nav-link scrollto" href="#about">About</a></li>
             <li><a class="nav-link scrollto" href="{{ url('pengguna/vidio') }}">Vidio</a></li>
+            <li><a class="nav-link scrollto" href="{{ url('pengguna/profile') }}">Profile</a></li>
             {{-- <li class="dropdown"><a href="#"><span>Course</span> <i class="bi bi-chevron-down"></i></a>
                 <ul>
                     <li><a href="#">Editing Vidio</a></li>
