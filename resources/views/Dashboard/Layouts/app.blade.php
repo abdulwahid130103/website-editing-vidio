@@ -27,6 +27,8 @@
         href="{{ asset('css/components.css') }}">
     <link rel="stylesheet"
     href="{{ asset('library/izitoast/dist/css/iziToast.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('assets/css/custom.css') }}">
 
     <!-- Start GA -->
     <script async

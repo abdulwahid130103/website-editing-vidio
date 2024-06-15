@@ -46,6 +46,16 @@
                     </li>
                 </ul>
             </li>
+            <li class="nav-item dropdown {{ $type_menu == 'transaction' ? 'active' : '' }}">
+                <a href="#"
+                    class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Transaction</span></a>
+                <ul class="dropdown-menu">
+                    <li class='{{ Request::is('admin/komentar_vidio') ? 'active' : '' }}'>
+                        <a class="nav-link"
+                            href="{{ url('admin/komentar_vidio') }}">Komentar Vidio</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </aside>
 </div>

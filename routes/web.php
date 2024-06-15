@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\VidioController;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\PlaylistController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\KomentarVidio;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Pengguna\DetailPlaylistPengguna;
 use App\Http\Controllers\Pengguna\DetailVidioPengguna;
@@ -60,6 +61,8 @@ Route::middleware(['auth','cekJabatan:admin'])->prefix('admin')->group(function 
     Route::resource('/playlist',PlaylistController::class);
     Route::resource('/profile',ProfileController::class);
     Route::resource('/kategori',KategoriController::class);
+    Route::resource('/komentar_vidio',KomentarVidio::class);
+    Route::get('/get_detail_playlist/{id}',[KomentarVidio::class,'get_detail_playlist']);
     Route::post('/user/password',[UserController::class,"ganti_password"])->name('user.password');
     Route::post('/profile/password',[ProfileController::class,"ganti_password"])->name('profile.password');
     Route::resource('/vidio',VidioController::class);

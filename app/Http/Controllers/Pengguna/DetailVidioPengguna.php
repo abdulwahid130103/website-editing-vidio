@@ -21,6 +21,9 @@ class DetailVidioPengguna extends Controller
     public function index($id)
     {
         // dd($id);
+        if ($id == 0) {
+            return redirect()->back();
+        }
         $id_user = Auth::user()->id;
         $data = Vidio::with(["ratingKomens","playlist"])->where("id",$id)->get();
         $datas = [];

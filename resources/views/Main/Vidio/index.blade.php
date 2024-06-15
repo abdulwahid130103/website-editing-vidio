@@ -66,7 +66,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row" id="list_playlist_terbaru">
+                                <div class="row g-3" id="list_playlist_terbaru">
 
                                 </div>
                             </div>
@@ -167,16 +167,14 @@
                                             <span class="post-date">
                                                 <small> ${item.kategori}
                                             </span>
-                                            <div class="container">
-                                                <div class="row">
-                                                    <div class="col-lg-6 d-flex gap-2 justify-content-start align-items-center">
-                                                        <i class="fa fa-users icon-siswa-content" aria-hidden="true"></i>
-                                                        <h5 class="caption-icon-siswa-content">Siswa</h5>
-                                                    </div>
-                                                    <div class="col-lg-6 d-flex gap-2 justify-content-start align-items-center">
-                                                        <i class="fa fa-bars icon-siswa-content" aria-hidden="true"></i>
-                                                        <h5 class="caption-icon-siswa-content">${item.total_vidio} Modul</h5>
-                                                    </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 d-flex gap-2 justify-content-start align-items-center">
+                                                    <i class="fa fa-users icon-siswa-content" aria-hidden="true"></i>
+                                                    <h5 class="caption-icon-siswa-content">Siswa</h5>
+                                                </div>
+                                                <div class="col-lg-6 d-flex gap-2 justify-content-start align-items-center">
+                                                    <i class="fa fa-bars icon-siswa-content" aria-hidden="true"></i>
+                                                    <h5 class="caption-icon-siswa-content">${item.total_vidio} Modul</h5>
                                                 </div>
                                             </div>
                                             <div class="d-flex mt-3">
@@ -249,21 +247,26 @@
             get_list_vidio_main(datas_current,kategori_id_current,is_kategori_current,isi_filter_current,is_filter_current);
         });
 
-        function pembersihan_small(){
+        function pembersihan_small() {
             var playlistContainer = document.getElementById('list_playlist_terbaru');
             if (playlistContainer) {
                 var smallElements = playlistContainer.getElementsByTagName('small');
 
-                for (var i = 0; i < smallElements.length; i++) {
-                    var smallElement = smallElements[i];
-                    var fragment = document.createDocumentFragment();
+                while (smallElements.length > 0) {
+                    var smallElement = smallElements[0];
+                    var parent = smallElement.parentNode;
                     while (smallElement.firstChild) {
-                        fragment.appendChild(smallElement.firstChild);
+                        parent.insertBefore(smallElement.firstChild, smallElement);
                     }
-                    smallElement.parentNode.replaceChild(fragment, smallElement);
+                    parent.removeChild(smallElement);
                 }
             }
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            pembersihan_small();
+        });
+
 
         $(document).ready(function(){
             get_list_vidio_main(datas_current,kategori_id_current,is_kategori_current,isi_filter_current,is_filter_current);

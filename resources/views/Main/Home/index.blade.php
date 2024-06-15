@@ -44,7 +44,7 @@
         <div class="row" id="list_playlist_terbaru">
 
             @foreach ($datas as $item)
-                <div class="col-lg-4 col-xl-4 col-sm-4">
+                <div class="col-lg-4">
                     <a href="{{ url("pengguna/detailPlaylist/".$item->id) }}">
                         <div class="post-box">
                             <div class="post-img"><img src="{{ asset('storage/playlist/'.$item->thumbnail_playlist) }}" class="img-fluid" alt=""></div>
@@ -52,16 +52,14 @@
                             <span class="post-date">
                                 <small>{{ $item->kategori }}
                             </span>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-lg-6 d-flex gap-2 justify-content-start align-items-center">
-                                        <i class="fa fa-users icon-siswa-content" aria-hidden="true"></i>
-                                        <h5 class="caption-icon-siswa-content">Siswa</h5>
-                                    </div>
-                                    <div class="col-lg-6 d-flex gap-2 justify-content-start align-items-center">
-                                        <i class="fa fa-bars icon-siswa-content" aria-hidden="true"></i>
-                                        <h5 class="caption-icon-siswa-content">{{ $item->total_vidio }} Modul</h5>
-                                    </div>
+                            <div class="row">
+                                <div class="col-lg-6 d-flex gap-2 justify-content-start align-items-center">
+                                    <i class="fa fa-users icon-siswa-content" aria-hidden="true"></i>
+                                    <h5 class="caption-icon-siswa-content">Siswa</h5>
+                                </div>
+                                <div class="col-lg-6 d-flex gap-2 justify-content-start align-items-center">
+                                    <i class="fa fa-bars icon-siswa-content" aria-hidden="true"></i>
+                                    <h5 class="caption-icon-siswa-content">{{ $item->total_vidio }} Modul</h5>
                                 </div>
                             </div>
                             <div class="d-flex mt-3">
@@ -129,7 +127,7 @@
         <div class="row" id="list_playlist_terlama">
 
             @foreach ($datas2 as $item)
-                <div class="col-lg-4 col-xl-4 col-sm-4">
+                <div class="col-lg-4">
                     <a href="{{ url("pengguna/detailPlaylist/".$item->id) }}">
                         <div class="post-box">
                             <div class="post-img"><img src="{{ asset('storage/playlist/'.$item->thumbnail_playlist) }}" class="img-fluid" alt=""></div>
@@ -137,16 +135,14 @@
                             <span class="post-date">
                                 <small>{{ $item->kategori }}
                             </span>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-lg-6 d-flex gap-2 justify-content-start align-items-center">
-                                        <i class="fa fa-users icon-siswa-content" aria-hidden="true"></i>
-                                        <h5 class="caption-icon-siswa-content">Siswa</h5>
-                                    </div>
-                                    <div class="col-lg-6 d-flex gap-2 justify-content-start align-items-center">
-                                        <i class="fa fa-bars icon-siswa-content" aria-hidden="true"></i>
-                                        <h5 class="caption-icon-siswa-content">{{ $item->total_vidio }} Modul</h5>
-                                    </div>
+                            <div class="row">
+                                <div class="col-lg-6 d-flex gap-2 justify-content-start align-items-center">
+                                    <i class="fa fa-users icon-siswa-content" aria-hidden="true"></i>
+                                    <h5 class="caption-icon-siswa-content">Siswa</h5>
+                                </div>
+                                <div class="col-lg-6 d-flex gap-2 justify-content-start align-items-center">
+                                    <i class="fa fa-bars icon-siswa-content" aria-hidden="true"></i>
+                                    <h5 class="caption-icon-siswa-content">{{ $item->total_vidio }} Modul</h5>
                                 </div>
                             </div>
                             <div class="d-flex mt-3">
@@ -194,6 +190,20 @@
                 smallElement.parentNode.replaceChild(fragment, smallElement);
             }
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var smallElements = document.getElementsByTagName('small');
+
+            while (smallElements.length > 0) {
+                var smallElement = smallElements[0];
+                var parent = smallElement.parentNode;
+                while (smallElement.firstChild) {
+                    parent.insertBefore(smallElement.firstChild, smallElement);
+                }
+                parent.removeChild(smallElement);
+            }
+        });
+
         var playlistContainer_terlama = document.getElementById('list_playlist_terlama');
         if (playlistContainer_terlama) {
             var smallElements = playlistContainer_terlama.getElementsByTagName('small');

@@ -12,7 +12,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $data = Playlist::with(["vidios", "kategori"])->latest()->get();
+        $data = Playlist::with(["vidios", "kategori"])->latest()->limit(3)->get();
         $datas = [];
 
         foreach ($data as $playlist) {
@@ -48,7 +48,7 @@ class HomeController extends Controller
             ];
         }
 
-        $data2 = Playlist::with(["vidios", "kategori"])->oldest()->get();
+        $data2 = Playlist::with(["vidios", "kategori"])->oldest()->limit(3)->get();
         $datas2 = [];
 
         foreach ($data2 as $playlist) {
