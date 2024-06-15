@@ -99,7 +99,6 @@ class ProfileController extends Controller
                 $newdata = [
                     'nama_lengkap' => $request->nama_lengkap,
                     'username' => $request->username,
-                    'password' => Hash::make($request->password),
                     'email' => $request->email,
                     'role_id' => $request->role_id,
                     'no_telfon' => $request->no_telfon,
@@ -110,7 +109,6 @@ class ProfileController extends Controller
                 $newdata = [
                     'nama_lengkap' => $request->nama_lengkap,
                     'username' => $request->username,
-                    'password' => Hash::make($request->password),
                     'email' => $request->email,
                     'role_id' => $request->role_id,
                     'no_telfon' => $request->no_telfon,

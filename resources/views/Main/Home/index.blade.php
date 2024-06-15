@@ -15,7 +15,7 @@
           <h2 data-aos="fade-up" data-aos-delay="400" class="caption-hero-dua">Tingkatkan potensi karir Anda disini !</h2>
           <div data-aos="fade-up" data-aos-delay="600">
             <div class="text-center text-lg-start">
-              <a href="#about" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
+              <a href="{{ url('pengguna/vidio') }}" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
                 <span>Mulai Sekarang</span>
                 <i class="bi bi-arrow-right"></i>
               </a>
@@ -115,6 +115,63 @@
       </div>
 
     </section><!-- End Recent Blog Posts Section -->
+
+    <!-- ======= Recent Blog Posts Section ======= -->
+    <section id="recent-blog-posts" class="recent-blog-posts">
+
+      <div class="container" data-aos="fade-up">
+
+        <header class="section-header">
+          <h2>Vidio</h2>
+          <p>Playlist Terlama</p>
+        </header>
+
+        <div class="row" id="list_playlist_terlama">
+
+            @foreach ($datas2 as $item)
+                <div class="col-lg-4 col-xl-4 col-sm-4">
+                    <a href="{{ url("pengguna/detailPlaylist/".$item->id) }}">
+                        <div class="post-box">
+                            <div class="post-img"><img src="{{ asset('storage/playlist/'.$item->thumbnail_playlist) }}" class="img-fluid" alt=""></div>
+                            <h3 class="post-title">{{ $item->nama_playlist }}</h3>
+                            <span class="post-date">
+                                <small>{{ $item->kategori }}
+                            </span>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-6 d-flex gap-2 justify-content-start align-items-center">
+                                        <i class="fa fa-users icon-siswa-content" aria-hidden="true"></i>
+                                        <h5 class="caption-icon-siswa-content">Siswa</h5>
+                                    </div>
+                                    <div class="col-lg-6 d-flex gap-2 justify-content-start align-items-center">
+                                        <i class="fa fa-bars icon-siswa-content" aria-hidden="true"></i>
+                                        <h5 class="caption-icon-siswa-content">{{ $item->total_vidio }} Modul</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex mt-3">
+                                @if ($item->rating == 0)
+                                    <div class="ratings">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    </div>
+                                    <h5 class="review-count">{{ $item->rating }} Rating</h5>
+                                @else
+                                    <div class="ratings">
+                                        <i class="fa fa-star rating-color" aria-hidden="true"></i>
+                                    </div>
+                                    <h5 class="review-count">{{ $item->rating }} Rating</h5>
+                                @endif
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endforeach
+
+        </div>
+
+      </div>
+
+    </section><!-- End Recent Blog Posts Section -->
   </main><!-- End #main -->
   @endslot
 
@@ -127,6 +184,19 @@
         var playlistContainer = document.getElementById('list_playlist_terbaru');
         if (playlistContainer) {
             var smallElements = playlistContainer.getElementsByTagName('small');
+
+            for (var i = 0; i < smallElements.length; i++) {
+                var smallElement = smallElements[i];
+                var fragment = document.createDocumentFragment();
+                while (smallElement.firstChild) {
+                    fragment.appendChild(smallElement.firstChild);
+                }
+                smallElement.parentNode.replaceChild(fragment, smallElement);
+            }
+        }
+        var playlistContainer_terlama = document.getElementById('list_playlist_terlama');
+        if (playlistContainer_terlama) {
+            var smallElements = playlistContainer_terlama.getElementsByTagName('small');
 
             for (var i = 0; i < smallElements.length; i++) {
                 var smallElement = smallElements[i];

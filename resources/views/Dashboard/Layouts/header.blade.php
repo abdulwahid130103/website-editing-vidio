@@ -37,7 +37,7 @@
                 <figure class="avatar mr-2 avatar-sm">
                     <img src="{{ asset('storage/user/' . Auth::user()->foto) }}" alt="...">
                 </figure>
-                <div class="d-sm-none d-lg-inline-block">Shefi</div>
+                <div class="d-sm-none d-lg-inline-block">{{ Auth::user()->username }}</div>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <a href="javascript:void(0)" id="tombol-profile"

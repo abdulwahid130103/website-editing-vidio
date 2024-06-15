@@ -13,6 +13,7 @@ use App\Http\Controllers\Pengguna\DetailPlaylistPengguna;
 use App\Http\Controllers\Pengguna\DetailVidioPengguna;
 use App\Http\Controllers\Pengguna\HomeController;
 use App\Http\Controllers\Pengguna\ProfilePenggunaController;
+use App\Http\Controllers\Pengguna\UpdatePasswordPengguna;
 use App\Http\Controllers\Pengguna\VidioPenggunaController;
 
 /*
@@ -41,6 +42,9 @@ Route::prefix('pengguna')->name("pengguna")->group(function () {
     Route::get('/get_input_comment/{id}',[DetailVidioPengguna::class,"get_input_comment"])->name('get_input_comment')->middleware("auth");
     Route::get('/get_rating_komen/{id}',[DetailVidioPengguna::class,"get_rating_komen"])->name('get_rating_komen')->middleware("auth");
     Route::post('/store_comment',[DetailVidioPengguna::class,"store_comment"])->name('store_comment')->middleware("auth");
+    Route::get('/get_profile',[ProfilePenggunaController::class,"get_profile"])->name('main.profile.get_profile')->middleware("auth");
+    Route::put('/update_password_profile',[ProfilePenggunaController::class,"ganti_password"])->name('main.profile.update')->middleware("auth");
+    Route::resource('/update_password_main',UpdatePasswordPengguna::class)->middleware("auth");
 });
 
 Route::controller(LoginController::class)->group(function(){

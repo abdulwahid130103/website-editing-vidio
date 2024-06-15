@@ -462,6 +462,29 @@ p {
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px !important;
 }
 
+.image-wrapper {
+    width: 100%;
+    height: 40vh;
+    border-radius: 10px;
+    overflow: hidden; /* Menambahkan overflow: hidden */
+    margin-bottom: 1rem;
+    background-color: #fff;
+}
+
+.display_profile {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Menyesuaikan ukuran gambar */
+    object-position: center;
+}
+
+.btn_update_profile_main,
+.btn_update_password {
+    font-family: "roboto-bold";
+    background: #4154f1 !important;
+    color: #fff !important;
+}
+
 /* profile end */
 
 @keyframes blink {
