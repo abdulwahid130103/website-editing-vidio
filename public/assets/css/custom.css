@@ -44,4 +44,8 @@
 .small-ratings i {
     color: #cecece;
 }
+
+#display_vidio_container > #videoPlayer {
+    border-radius: 10px;
+}
 /* custom komentar vidio end */

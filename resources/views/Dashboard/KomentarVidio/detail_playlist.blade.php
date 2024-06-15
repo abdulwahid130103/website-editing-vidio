@@ -68,7 +68,7 @@
                                                         </div>
                                                         <p>{{ Str::limit($item2->deskripsi, 45, '...') }} </p>
                                                         <div class="article-cta">
-                                                            <a href="#">Lihat Komentar <i class="fas fa-chevron-right"></i></a>
+                                                            <a href="{{ url('admin/get_detail_vidio_playlist/'.$item2->id) }}">Lihat Komentar <i class="fas fa-chevron-right"></i></a>
                                                         </div>
                                                     </div>
                                                 </article>

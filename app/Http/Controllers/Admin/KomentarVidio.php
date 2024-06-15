@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
+use App\Models\Vidio;
 use App\Models\Playlist;
 use App\Models\RatingKomen;
-use App\Models\Vidio;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Validator;
+use Yaza\LaravelGoogleDriveStorage\Gdrive;
+
 
 class KomentarVidio extends Controller
 {
@@ -133,8 +138,81 @@ class KomentarVidio extends Controller
         ]);
     }
 
-    public function get_detail_playlist_dua($id){
+    public function get_detail_vidio_playlist($id){
+        Carbon::setLocale('id');
+        // dd($id);
+        $data = Vidio::with(["ratingKomens","playlist"])->where("id",$id)->get();
+        $user = Auth::user();
+        $ratings = [];
+        foreach ($data as $key => $value) {
+            $data_ratting = RatingKomen::with(["user","vidio"])->where("vidio_id",$value->id)->latest()->get();
+            foreach ($data_ratting as $key => $value2) {
+                $edit = false;
+                if($user->id == $value2->user_id){
+                    $edit = true;
+                }
+                $ratings[] = (object)[
+                    "id" => $value2->id,
+                    "bintang" => $value2->bintang,
+                    "isi" => $value2->isi,
+                    "user_id" => $value2->user->id,
+                    "foto" => $value2->user->foto,
+                    "nama_user" => $value2->user->username,
+                    "time_ago" => Carbon::parse($value2->created_at)->diffForHumans(),
+                    "edit" => $edit,
+                ];
+            }
+        }
 
+        // dd($ratings);
+
+        return view('Dashboard.KomentarVidio.detail_vidio_playlist',[
+            "datas" => $ratings,
+            "vidio_id" =>$id,
+        ]);
+    }
+
+    public function loadVidio($link) {
+        $cacheKey = 'video_' . md5($link);
+        if (Cache::has($cacheKey)) {
+            return Cache::get($cacheKey);
+        }
+
+        $data = Gdrive::get($link);
+        $base64_image = base64_encode($data->file);
+        $url = 'data:' . $data->ext . ';base64,' . $base64_image;
+
+        // Simpan dalam cache selama 1 jam
+        Cache::put($cacheKey, $url, now()->addHour());
+
+        return $url;
+    }
+
+
+
+    public function get_vidio_playlist($id){
+        $data = Vidio::with(["ratingKomens","playlist"])->where("id",$id)->get();
+        $datas = [];
+        $url_link = '';
+        foreach ($data as $key => $value) {
+            $url_link = $value->link;
+            $datas[] = (object)[
+                "id" => $value->id,
+                "judul" => $value->judul,
+                "deskripsi" => $value->deskripsi,
+                "kategori" => $value->playlist->kategori->nama_kategori,
+                "time" => $value->time,
+                "tanggal_upload" => $value->tanggal_upload,
+                "thumbnail_vidio" => $value->thumbnail_vidio,
+                "link" => $value->link,
+                "type_vidio" => $value->type_vidio,
+            ];
+        }
+        $link_new = $this->loadVidio($url_link);
+        return response()->json([
+            "data" => $datas,
+            'video_link' => $link_new,
+        ]);
     }
     /**
      * Show the form for creating a new resource.
