@@ -67,43 +67,8 @@
                                                 <h4>Komentar Vidio</h4>
                                             </div>
                                             <div class="card-body">
-                                                <ul class="list-unstyled list-unstyled-border list-unstyled-noborder">
-                                                    @if (!empty($datas))
-                                                        @foreach ($datas as $item)
-                                                            <li class="media">
-                                                                <img alt="image"
-                                                                    class="rounded-circle mr-3"
-                                                                    width="70" height="70"
-                                                                    src="{{ asset('storage/user/'.$item->foto) }}">
-                                                                <div class="media-body">
-                                                                    {{-- <div class="media-right">
-                                                                        <div class="text-primary">Approved</div>
-                                                                    </div> --}}
-                                                                    <div class="media-title mb-1">{{ $item->nama_user }}</div>
-                                                                    <div class="text-time">{{ $item->time_ago }}</div>
-                                                                    <div class="media-description text-muted">
-                                                                        {{ $item->isi }}
-                                                                    </div>
-                                                                    {{-- <div class="media-links">
-                                                                        <a href="#">View</a>
-                                                                        <div class="bullet"></div>
-                                                                        <a href="#">Edit</a>
-                                                                        <div class="bullet"></div>
-                                                                        <a href="#"
-                                                                            class="text-danger">Trash</a>
-                                                                    </div> --}}
-                                                                </div>
-                                                            </li>
-                                                        @endforeach
-                                                    @else
-                                                        <div class="col-12 mb-4">
-                                                            <div class="hero bg-primary text-white">
-                                                                <div class="hero-inner">
-                                                                    <h2>Komentar Kosong</h2>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    @endif
+                                                <ul class="list-unstyled list-unstyled-border list-unstyled-noborder container_list_komen_admin" id="container_list_komen_admin">
+
                                                 </ul>
                                             </div>
                                         </div>
@@ -252,8 +217,67 @@
                 });
             }
 
+            function get_list_koment_admin() {
+                $("#container_list_komen_admin").empty();
+                let id = "{{ $vidio_id }}";
+                $.ajax({
+                    url: `{{ url('admin/get_list_koment_admin/${id}') }}`,
+                    type: 'GET',
+                    success: function(response) {
+                        let htmlContent = '';
+
+                        console.log(response.ratings);
+                        if(response.ratings.length != 0){
+                            response.ratings.forEach(item => {
+                            let starHtml = '';
+
+                            let angka = 5 - item.bintang;
+                            for (let i = 0; i < item.bintang; i++) {
+                                starHtml += `<i class="fa fa-star star-comment-list" aria-hidden="true"></i>`;
+                            }
+                            for (let i = 0; i < angka; i++) {
+                                starHtml += `<i class="fa fa-star" aria-hidden="true"></i>`;
+                            }
+
+                            htmlContent += `<li class="media">
+                                                <img alt="image"
+                                                    class="rounded-circle mr-3"
+                                                    width="70" height="70"
+                                                    src="{{ asset('storage/user/${item.foto}') }}">
+                                                <div class="media-body">
+                                                    {{-- <div class="media-right">
+                                                        <div class="text-primary">Approved</div>
+                                                    </div> --}}
+                                                    <div class="media-title mb-1">${item.nama_user}</div>
+                                                    <div class="text-time">${item.time_ago}</div>
+                                                    <div class="media-description text-muted">
+                                                        ${item.isi}
+                                                    </div>
+                                                    <div class="media-links">
+                                                       ${starHtml}
+                                                    </div>
+                                                </div>
+                                            </li>`;
+                        });
+                        }else{
+                            htmlContent += `<div class="col-12 mb-4">
+                                    <div class="hero bg-primary text-white">
+                                        <div class="hero-inner">
+                                            <h2>Komentar Kosong</h2>
+                                        </div>
+                                    </div>
+                                </div>`;
+                        }
+
+                        $("#container_list_komen_admin").append(htmlContent);
+
+                    }
+                });
+            }
+
             $(document).ready(function(){
                 get_vidio_detail();
+                get_list_koment_admin();
             });
         </script>
     @endslot

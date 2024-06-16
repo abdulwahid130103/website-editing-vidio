@@ -65,6 +65,7 @@ Route::middleware(['auth','cekJabatan:admin'])->prefix('admin')->group(function 
     Route::get('/get_detail_playlist/{id}',[KomentarVidio::class,'get_detail_playlist']);
     Route::get('/get_detail_vidio_playlist/{id}',[KomentarVidio::class,'get_detail_vidio_playlist']);
     Route::get('/get_vidio_playlist/{id}',[KomentarVidio::class,'get_vidio_playlist']);
+    Route::get('/get_list_koment_admin/{id}',[KomentarVidio::class,'get_list_koment_admin']);
     Route::post('/user/password',[UserController::class,"ganti_password"])->name('user.password');
     Route::post('/profile/password',[ProfileController::class,"ganti_password"])->name('profile.password');
     Route::resource('/vidio',VidioController::class);

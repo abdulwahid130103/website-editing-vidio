@@ -48,4 +48,10 @@
 #display_vidio_container > #videoPlayer {
     border-radius: 10px;
 }
+.star-comment-list {
+    color: #ffb703;
+}
+.star-comment-o-list {
+    color: #000;
+}
 /* custom komentar vidio end */

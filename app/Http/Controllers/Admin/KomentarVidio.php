@@ -139,35 +139,7 @@ class KomentarVidio extends Controller
     }
 
     public function get_detail_vidio_playlist($id){
-        Carbon::setLocale('id');
-        // dd($id);
-        $data = Vidio::with(["ratingKomens","playlist"])->where("id",$id)->get();
-        $user = Auth::user();
-        $ratings = [];
-        foreach ($data as $key => $value) {
-            $data_ratting = RatingKomen::with(["user","vidio"])->where("vidio_id",$value->id)->latest()->get();
-            foreach ($data_ratting as $key => $value2) {
-                $edit = false;
-                if($user->id == $value2->user_id){
-                    $edit = true;
-                }
-                $ratings[] = (object)[
-                    "id" => $value2->id,
-                    "bintang" => $value2->bintang,
-                    "isi" => $value2->isi,
-                    "user_id" => $value2->user->id,
-                    "foto" => $value2->user->foto,
-                    "nama_user" => $value2->user->username,
-                    "time_ago" => Carbon::parse($value2->created_at)->diffForHumans(),
-                    "edit" => $edit,
-                ];
-            }
-        }
-
-        // dd($ratings);
-
         return view('Dashboard.KomentarVidio.detail_vidio_playlist',[
-            "datas" => $ratings,
             "vidio_id" =>$id,
         ]);
     }
@@ -187,8 +159,6 @@ class KomentarVidio extends Controller
 
         return $url;
     }
-
-
 
     public function get_vidio_playlist($id){
         $data = Vidio::with(["ratingKomens","playlist"])->where("id",$id)->get();
@@ -212,6 +182,29 @@ class KomentarVidio extends Controller
         return response()->json([
             "data" => $datas,
             'video_link' => $link_new,
+        ]);
+    }
+
+    public function get_list_koment_admin($id) {
+        Carbon::setLocale('id');
+        $data = Vidio::with(["ratingKomens","playlist"])->where("id",$id)->get();
+        $ratings = [];
+        foreach ($data as $key => $value) {
+            $data_ratting = RatingKomen::with(["user","vidio"])->where("vidio_id",$value->id)->latest()->get();
+            foreach ($data_ratting as $key => $value2) {
+                $ratings[] = (object)[
+                    "id" => $value2->id,
+                    "bintang" => $value2->bintang,
+                    "isi" => $value2->isi,
+                    "user_id" => $value2->user->id,
+                    "foto" => $value2->user->foto,
+                    "nama_user" => $value2->user->username,
+                    "time_ago" => Carbon::parse($value2->created_at)->diffForHumans(),
+                ];
+            }
+        }
+        return response()->json([
+            "ratings" => $ratings
         ]);
     }
     /**
