@@ -21,7 +21,7 @@ class PlaylistController extends Controller
                 ->addIndexColumn()
                 ->addColumn('kategori_id', function ($model){
                     return $model->kategori->nama_kategori;
-                }) 
+                })
                 ->addColumn('action', 'Dashboard.Playlist.action')
                 ->rawColumns(['action'])
                 ->toJson();
@@ -78,7 +78,7 @@ class PlaylistController extends Controller
             }else{
                 return response()->json(['errorgambar'=> "Thumbnail tidak boleh kosong !"]);
             }
-    
+
             return response()->json(["success" => "Berhasil menyimpan data playlist"]);
         }
     }
@@ -120,21 +120,21 @@ class PlaylistController extends Controller
         ]);
 
         if($validasi->fails()){
-            return response()->json(['status' => 0 ,'error'=> $validasi->errors()]);
+            return response()->json(['status' => 0 ,'errors'=> $validasi->errors()->all()]);
         }else{
             if (!empty($request->file('thumbnail_playlist'))) {
-    
+
                 if($request->input('thumbnail_playlist_lama')){
                     $old_picture_path = public_path('storage/playlist/'.$request->input('thumbnail_playlist_lama'));
                     if (file_exists($old_picture_path)) {
                         unlink($old_picture_path);
-                    }   
+                    }
                 }
                 $gambar = $request->file('thumbnail_playlist');
                 $nama_gambar =  "PG".date('dmy') . time(). '.' . $gambar->getClientOriginalExtension();
                 $path = public_path('storage/playlist/') . $nama_gambar;
                 Image::make($gambar)->save($path);
-                
+
                 $newdata = [
                     'nama_playlist' => $request->nama_playlist,
                     'deskripsi_playlist' => $request->deskripsi_playlist,
@@ -160,14 +160,14 @@ class PlaylistController extends Controller
     public function destroy(string $id)
     {
         $playlist = Playlist::findOrFail($id);
-        
+
         if($playlist->thumbnail_playlist != null){
             $gambar_path = public_path("storage/playlist/{$playlist->thumbnail_playlist}");
             if (file_exists($gambar_path)) {
                 unlink($gambar_path);
             }
         }
-    
+
         $playlist->delete();
         return response()->json(['success' => "berhasil menghapus data playlist"]);
     }

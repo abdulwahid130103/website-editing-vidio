@@ -11,10 +11,10 @@
 			serverSide: true,
 			ajax: "{{ route('role.index') }}",
 			columns: [
-                { 
-                    data: 'DT_RowIndex', 
-                    name: 'DT_RowIndex', 
-                   searchable: false 
+                {
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                   searchable: false
                 },
 				{ data: 'nama_role', name: 'nama_role' },
 				{ data: 'action', name: 'action' },
@@ -114,27 +114,28 @@
                                 nama_role : $('#nama_role').val()
                             },
                             success:function(response){
-                                if(response.status == 0){
-                                    var errorMessages = "<ul>";
-                                    console.log(response.errors);
-                                    $.each(response.errors, function (key, value) {
-                                        errorMessages += "<li>" + value + "</li>";
-                                    });
-                                    errorMessages += "</ul>";
-
-                                    iziToast.error({
-                                        message: errorMessages,
-                                        position: 'topRight'
-                                    });
-                                }else{
-                                    iziToast.success({
-                                        title: 'Berhasil',
-                                        message: response.success,
-                                        position: 'topRight'
-                                    });
+                                if (response.success) {
+                                        iziToast.success({
+                                            title: 'Berhasil',
+                                            message: response.success,
+                                            position: 'topRight'
+                                        });
+                                        $('#modalrole').modal('hide');
+                                        $('#datatable_role').DataTable().ajax.reload();
+                                } else {
+                                    if (Array.isArray(response.error)) {
+                                        var errorMessages = "<ul>";
+                                        $.each(response.error, function (key, value) {
+                                            errorMessages += "<li>" + value + "</li>";
+                                        });
+                                        errorMessages += "</ul>";
+                                        $('#modalrole').modal('hide');
+                                        iziToast.error({
+                                            message: errorMessages,
+                                            position: 'topRight'
+                                        });
+                                    }
                                 }
-                                $('#modalrole').modal('hide');
-                                $('#datatable_role').DataTable().ajax.reload();
                                 reset_input();
                             }
                         });
@@ -142,7 +143,7 @@
                     });
                 }
             });
-          
+
         });
     }
 
@@ -185,7 +186,7 @@
     $('#modalrole').on('hidden.bs.modal',function(){
         $('#nama_role').val('');
     });
-    
+
     $(document).ready(function(){
         datatable_role();
         aksi_tambah_role();

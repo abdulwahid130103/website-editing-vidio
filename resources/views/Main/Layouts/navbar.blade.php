@@ -24,7 +24,7 @@
             <li><a class="nav-link scrollto {{ Request::is('pengguna/vidio') ? 'active' : '' }}" href="{{ url('pengguna/vidio') }}">Vidio</a></li>
             @if (Auth::user())
                 <li><a class="nav-link scrollto {{ Request::is('pengguna/profile') ? 'active' : '' }}" href="{{ url('pengguna/profile') }}">Profile</a></li>
-                <li><a class="nav-link scrollto {{ Request::is('pengguna/update_password_main') ? 'active' : '' }}" href="{{ url('pengguna/update_password_main') }}">Update Password</a></li>
+                {{-- <li><a class="nav-link scrollto {{ Request::is('pengguna/update_password_main') ? 'active' : '' }}" href="{{ url('pengguna/update_password_main') }}">Update Password</a></li> --}}
             @endif
             {{-- <li class="dropdown"><a href="#"><span>Course</span> <i class="bi bi-chevron-down"></i></a>
                 <ul>

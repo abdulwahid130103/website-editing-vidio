@@ -81,7 +81,7 @@ class ProfileController extends Controller
         ]);
 
         if($validasi->fails()){
-            return response()->json(['status' => 0 ,'error'=> $validasi->errors()]);
+            return response()->json(['status' => 0 ,'errors'=> $validasi->errors()->all()]);
         }else{
             if (!empty($request->file('foto_profile'))) {
 

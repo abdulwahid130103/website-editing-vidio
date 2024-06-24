@@ -46,23 +46,23 @@
                                             <div class="row gy-4">
 
                                             <div class="col-md-6">
-                                                <input type="text" name="username_profile" class="form-control username_profile" id="username_profile" placeholder="Masukkan username ..." required="">
+                                                <input type="text" name="username_profile" class="form-control username_profile" id="username_profile" placeholder="Masukkan username ..." required="" disabled>
                                             </div>
 
                                             <div class="col-md-6 ">
-                                                <input type="text" class="form-control nama_lengkap_profile" name="nama_lengkap_profile" id="nama_lengkap_profile" placeholder="Masukkan nama lengkap ..." required="">
+                                                <input type="text" class="form-control nama_lengkap_profile" name="nama_lengkap_profile" id="nama_lengkap_profile" placeholder="Masukkan nama lengkap ..." required="" disabled>
                                             </div>
 
                                             <div class="col-md-12">
-                                                <input type="email" class="form-control email_profile" name="email_profile" id="email_profile" placeholder="Masukkan email ..." required="">
+                                                <input type="email" class="form-control email_profile" name="email_profile" id="email_profile" placeholder="Masukkan email ..." required="" disabled>
                                             </div>
 
                                             <div class="col-md-12">
-                                                <input type="text" class="form-control no_telfon_profile" name="no_telfon_profile" id="no_telfon_profile" placeholder="Masukkan no telfon ..." required="">
+                                                <input type="text" class="form-control no_telfon_profile" name="no_telfon_profile" id="no_telfon_profile" placeholder="Masukkan no telfon ..." required="" disabled>
                                             </div>
 
                                             <div class="col-md-12">
-                                                <textarea class="form-control alamat_profile" name="alamat_profile" id="alamat_profile" rows="6" placeholder="Masukkan alamat ..." required=""></textarea>
+                                                <textarea class="form-control alamat_profile" name="alamat_profile" id="alamat_profile" rows="6" placeholder="Masukkan alamat ..." required="" disabled></textarea>
                                             </div>
 
                                             </div>
@@ -72,9 +72,9 @@
                                             <div class="image-wrapper">
                                                 <img class="display_profile" src="{{ asset('img/user_profile.jpg') }}" id="display_profile" alt="">
                                             </div>
-                                            <input type="file" class="form-control upload_foto" name="upload_foto" id="upload_foto" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                            <input type="file" class="form-control upload_foto d-none" name="upload_foto" id="upload_foto" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                                         </div>
-                                        <div class="col-lg-12 mt-4 d-flex justify-content-end">
+                                        <div class="col-lg-12 mt-4 d-flex d-none justify-content-end">
                                             <button type="button" class="btn btn-primary btn_update_profile_main" id="btn_update_profile_main">Update Profile</button>
                                         </div>
                                     </div>

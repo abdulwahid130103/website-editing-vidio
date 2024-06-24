@@ -281,7 +281,8 @@
                                 openLoading('Mohon Tunggu...! ','Sedang Update Vidio')
                             },
                             success:function(response){
-                                if(response.error){
+                                if(response.errors){
+                                    Swal.close();
                                     var errorMessages = "<ul>";
                                     console.log(response.errors);
                                     $.each(response.errors, function (key, value) {
@@ -294,6 +295,7 @@
                                         position: 'topRight'
                                     });
                                 }else if(response.error_file){
+                                    Swal.close();
                                     iziToast.error({
                                         message: response.error_file,
                                         position: 'topRight'

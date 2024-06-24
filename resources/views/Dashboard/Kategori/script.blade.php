@@ -103,8 +103,8 @@
                 success: function(response) {
                     showHideTombol("edit");
                     $('#modalkategori').modal('show');
-                    // console.log(response.data);
-                    $('#kategori').val(response.data.nama_kategori);
+                    console.log(response.data);
+                    $('#nama_kategori').val(response.data.nama_kategori);
                     var idNew = response.data.id;
                     $('.edit-data').off('click').on('click',function() {
                         $.ajax({
@@ -114,27 +114,28 @@
                                 nama_kategori : $('#nama_kategori').val()
                             },
                             success:function(response){
-                                if(response.status == 0){
-                                    var errorMessages = "<ul>";
-                                    console.log(response.errors);
-                                    $.each(response.errors, function (key, value) {
-                                        errorMessages += "<li>" + value + "</li>";
-                                    });
-                                    errorMessages += "</ul>";
-
-                                    iziToast.error({
-                                        message: errorMessages,
-                                        position: 'topRight'
-                                    });
-                                }else{
+                                if (response.success) {
                                     iziToast.success({
                                         title: 'Berhasil',
                                         message: response.success,
                                         position: 'topRight'
                                     });
+                                    $('#modalkategori').modal('hide');
+                                    $('#datatable_kategori').DataTable().ajax.reload();
+                                } else {
+                                    if (Array.isArray(response.error)) {
+                                        var errorMessages = "<ul>";
+                                        $.each(response.error, function (key, value) {
+                                            errorMessages += "<li>" + value + "</li>";
+                                        });
+                                        errorMessages += "</ul>";
+                                        $('#modalkategori').modal('hide');
+                                        iziToast.error({
+                                            message: errorMessages,
+                                            position: 'topRight'
+                                        });
+                                    }
                                 }
-                                $('#modalkategori').modal('hide');
-                                $('#datatable_kategori').DataTable().ajax.reload();
                                 reset_input();
                             }
                         });

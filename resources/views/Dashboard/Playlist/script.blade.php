@@ -11,22 +11,22 @@
 			serverSide: true,
 			ajax: "{{ route('playlist.index') }}",
 			columns: [
-                { 
-                    data: 'DT_RowIndex', 
-                    name: 'DT_RowIndex', 
-                   searchable: false 
+                {
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                   searchable: false
                 },
-				{ 
-                    data: 'nama_playlist', 
+				{
+                    data: 'nama_playlist',
                     name: 'nama_playlist'
                 },
-				{ 
-                    data: 'deskripsi_playlist', 
+				{
+                    data: 'deskripsi_playlist',
                     name: 'deskripsi_playlist'
                 },
 				{ data: 'kategori_id', name: 'kategori_id' },
 				{
-                     data: 'thumbnail_playlist', 
+                     data: 'thumbnail_playlist',
                      name: 'thumbnail_playlist',
                      render: function (data, type, full, meta) {
                         var assetUrl = "{{ asset('storage/playlist') }}";
@@ -54,7 +54,7 @@
                 formData.append('nama_playlist', $('#nama_playlist').val());
                 formData.append('deskripsi_playlist', $('#deskripsi_playlist').val());
                 formData.append('kategori_id', $('#kategori_id').val());
-                formData.append('thumbnail_playlist', $('input[type=file]')[0].files[0]); 
+                formData.append('thumbnail_playlist', $('input[type=file]')[0].files[0]);
                 $.ajax({
                     url: '{{ route('playlist.store') }}',
                     type: 'POST',
@@ -63,7 +63,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     contentType: false,
-                    processData: false,  
+                    processData: false,
                     success: function(response) {
                         if (response.success) {
                             iziToast.success({
@@ -163,7 +163,7 @@
                         formData.append('deskripsi_playlist', $('#deskripsi_playlist').val());
                         formData.append('kategori_id', $('#kategori_id').val());
                         formData.append('thumbnail_playlist_lama', $('#thumbnail_playlist_lama').val());
-                        formData.append('thumbnail_playlist', $('input[type=file]')[0].files[0]); 
+                        formData.append('thumbnail_playlist', $('input[type=file]')[0].files[0]);
                         $.ajax({
                             url: 'playlist/' + idNew,
                             type: 'POST',
@@ -174,7 +174,7 @@
                             success:function(response){
                                 if(response.status == 0){
                                     var errorMessages = "<ul>";
-                                    console.log(response.errors);
+                                    // console.log(response.errors);
                                     $.each(response.errors, function (key, value) {
                                         errorMessages += "<li>" + value + "</li>";
                                     });
@@ -200,7 +200,7 @@
                     });
                 }
             });
-          
+
         });
     }
 
@@ -247,7 +247,7 @@
         $('#deskripsi_playlist').val('');
         $('#card-thumbnail-playlist').addClass("d-none");
     });
-    
+
     $(document).ready(function(){
         datatable_playlist();
         aksi_tambah_playlist();
