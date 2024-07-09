@@ -46,7 +46,7 @@ class LoginController extends Controller
                         'isi' => "Berhasil login !",
                         'redirect_url' => route('dashboard.index')
                     ]);
-            } elseif ($userRole == 'pengguna') {
+            } elseif ($userRole == 'magang') {
                 return response()->json(['success' => true,'isi' => "Berhasil login !", 'redirect_url' => url('/')]);
             }
         }

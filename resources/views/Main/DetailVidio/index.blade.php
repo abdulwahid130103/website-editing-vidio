@@ -108,6 +108,7 @@
         <script src="
         https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.all.min.js
         "></script>
+        <script src="https://www.youtube.com/iframe_api"></script>
 
         {{-- <script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script> --}}
         <!-- Page Specific JS File -->
@@ -119,6 +120,47 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        var player;
+      function onPlayerReady(event) {
+            event.target.playVideo();
+            updateDuration();
+            setInterval(updateCurrentTime, 1000); // Update current time every second
+        }
+
+        function updateDuration() {
+            var duration = player.getDuration();
+            document.getElementById("duration-time").innerText = formatTime(duration);
+        }
+
+        function updateCurrentTime() {
+            var currentTime = player.getCurrentTime();
+            document.getElementById("current-time").innerText = formatTime(currentTime);
+        }
+
+        function formatTime(timeInSeconds) {
+            var minutes = Math.floor(timeInSeconds / 60);
+            var seconds = Math.floor(timeInSeconds % 60);
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            return minutes + ":" + seconds;
+        }
+
+        var done = false;
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.PLAYING && !done) {
+                // setTimeout(stopVideo, 6000);
+                setTimeout(function(){
+                    get_input_comment();
+                    get_rating_komen()
+                }, 120000);
+                done = true;
+            }
+        }
+
+        function stopVideo() {
+            player.stopVideo();
+        }
+
 
         function get_input_comment() {
             $("#container_input_comment").empty();
@@ -217,7 +259,19 @@
                     response.data.forEach(item => {
                         $("#container_detail_vidio").append(`
                             <div class="col-lg-12">
-                                <iframe width="100%" id="videoPlayer" class="play-vidio-detail-vidio" style="height: 70vh;" src="${item.link}" frameborder="0" allowfullscreen></iframe>
+                                <h4 class="caption-minimum-vidio">Lihat vidio minimal 2 menit !!!</h4>
+                            </div>
+                            <div class="col-lg-12">
+
+                                <div id="videoPlayer"></div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="card card-duration-container">
+                                    <div class="card-body container-duration">
+                                        <span>Current Time: <span id="current-time">0:00</span></span> /
+                                        <span>Duration: <span id="duration-time">0:00</span></span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="card card-comment-container">
@@ -231,18 +285,32 @@
                         `);
                         if (item.type_vidio == 'link') {
                             var videoURL = item.link;
+                            // var videoId = null;
                             var videoId = null;
                             if (videoURL.includes('youtube.com')) {
-                                videoId = videoURL.replace('https://www.youtube.com/embed/', '');
+                                videoId = videoURL.split('v=')[1];
                             } else if (videoURL.includes('youtu.be')) {
-                                videoId = videoURL.replace('https://youtu.be/', '');
+                                videoId = videoURL.split('.be/')[1];
                             }
-                            if (videoId) {
-                                var embedURL = 'https://www.youtube.com/embed/' + videoId;
-                                $('#videoPlayer').replaceWith('<iframe id="videoPlayer" class="play-vidio-detail-vidio" data-id="link" width="100%" style="height: 70vh;" src="' + embedURL + '" frameborder="0" allowfullscreen></iframe>');
-                            } else {
-                                $('#videoPlayer').replaceWith(`<img width="100%" class="play-vidio-detail-vidio" style="height: 70vh;" id="videoPlayer" src="{{ asset('img/not_found.jpg') }}" alt="notfound">`);
-                            }
+                            // if (videoId) {
+                            //     var embedURL = 'https://www.youtube.com/embed/"M7lc1UVf-VE';
+                            //     // var embedURL = 'https://www.youtube.com/embed/' + videoId;
+                            //     $('#videoPlayer').replaceWith('<iframe id="videoPlayer" class="play-vidio-detail-vidio" data-id="link" width="100%" style="height: 70vh;" src="' + embedURL + '" frameborder="0" allowfullscreen></iframe>');
+                            // } else {
+                            //     $('#videoPlayer').replaceWith(`<img width="100%" class="play-vidio-detail-vidio" style="height: 70vh;" id="videoPlayer" src="" alt="notfound">`);
+                            // }
+                            player = new YT.Player("videoPlayer", {
+                                height: "390",
+                                width: "640",
+                                videoId: videoId,
+                                playerVars: {
+                                    playsinline: 1,
+                                },
+                                events: {
+                                    onReady: onPlayerReady,
+                                    onStateChange: onPlayerStateChange,
+                                },
+                            });
                         } else if (item.type_vidio == 'upload') {
                             $('#videoPlayer').replaceWith(`
                                 <video id="videoPlayer" class="play-vidio-detail-vidio" style="height: 70vh;" data-id="upload" width="100%" controls>
@@ -250,8 +318,40 @@
                                     Your browser does not support the video tag.
                                 </video>
                             `);
+                            var videoPlayer = document.getElementById('videoPlayer');
+                            var playedTime = 0;
+                            var lastTime = 0;
+                            var isPlaying = false;
+
+                            videoPlayer.addEventListener('timeupdate', function() {
+                                var currentTime = videoPlayer.currentTime;
+                                if (isPlaying) {
+                                    playedTime += currentTime - lastTime;
+                                }
+                                lastTime = currentTime;
+
+                                document.getElementById('current-time').innerText = formatTime(currentTime);
+                                document.getElementById('duration-time').innerText = formatTime(videoPlayer.duration);
+
+                                if (playedTime >= 120 && !videoPlayer.hasTriggeredTwoMinutes) {
+                                    videoPlayer.hasTriggeredTwoMinutes = true;
+                                    get_input_comment();
+                                    get_rating_komen();
+                                }
+                            });
+
+                            videoPlayer.addEventListener('pause', function() {
+                                isPlaying = false;
+                                lastTime = videoPlayer.currentTime;
+                            });
+
+                            videoPlayer.addEventListener('play', function() {
+                                isPlaying = true;
+                                lastTime = videoPlayer.currentTime;
+                            });
                         }
                     });
+
                 }
             });
         }
@@ -597,8 +697,8 @@
 
         $(document).ready(function(){
             get_vidio_detail();
-            get_input_comment();
-            get_rating_komen();
+            // get_input_comment();
+            // get_rating_komen();
             get_list_vidio();
         });
       </script>

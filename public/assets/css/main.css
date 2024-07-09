@@ -362,7 +362,16 @@ p {
 .card-list-detail-vidio a {
     color: #000 !important;
 }
-
+.caption-minimum-vidio {
+    font-family: "roboto-medium" !important;
+    font-size: 18px !important;
+    text-align: center;
+    color: red !important;
+}
+#videoPlayer {
+    width: 100% !important;
+    height: 70vh !important;
+}
 .star-card {
     margin-top: 0.5rem;
     margin-right: 0.1rem;
